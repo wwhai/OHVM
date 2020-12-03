@@ -15,15 +15,19 @@ Min 256MB
 
 ### Stack
 
-8(layer)*32(Register) deepth Stack.
+8(layer) * 32(Register) deepth Stack.
 
 ## VM Model
 
+### Basic Structure
+
 ![](res/model.png)
 
+### Memory Distributed
 
+.......
 
-### Register
+### Register Specific
 
 |Name         | Symbol   |  Description  |
 |  ----  | ----  | ----|
@@ -109,16 +113,1325 @@ Min 256MB
 
 ## Instructions Set
 ### F0 : GOTO
-| Instruction Code | Function Code | Symbol   |  Function  |
-|  ----  | ----  | ---- | ----|
-| F      |   0   | GOTO | goto address |
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
 
 #### Example
-Hex:
-```
-F00xFFFF
-```
-ASM:
-```
-GOTO 0xFFF
-```
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+### F1 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### F2 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### F3 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### E1 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### E2 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### E3 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### E4 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### E5 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### E6 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+### E7 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### E8 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### E9 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### EA : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### EB : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D0 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D1 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D2 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D3 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D4 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D5 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D6 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D7 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D8 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### D9 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### CA : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### CB : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### CC : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+### CD : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+### B0 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### B1 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### B2 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### B3 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### B4 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### B5 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A0 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A1 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A2 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A3 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A4 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A5 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A6 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A7 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A8 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### A9 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### AA : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### 50 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### 51 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+### 52 : GOTO
+
+#### Define
+
+| Instruction Code | Function Code | Symbol   |Size | Description  |
+|  ----  | ----  | ---- | ----| ----|
+| F      |   0   | GOTO |   4  |description |
+
+#### Example
+- HEX:
+
+    ```c
+    F00xFFFF
+    ```
+
+- ASM:
+
+    ```c
+    GOTO 0xFFF
+    ```
+
+##### *Notice:*
+
+> some notice....
+
+
+
+## Program Example
+
+### Arithmetic
+
+### Loop
+
+### Sub process
+
+### Branch
+
+### Graphics
+
+### Network
+
+
