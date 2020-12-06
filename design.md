@@ -90,10 +90,10 @@ Min 256MB
 | C | B | BSRS | bit shift right in Stack |  |
 | C | C | BSLLS | bit shift left loop in Stack |  |
 | C | D | BSRLS | bit shift right loop in Stack |  |
-| B | 0 | # | immediately value to Acc |  |
-| B | 1 | $ | immediately value to Register |  |
-| B | 2 | % | immediately value to Stack |  |
-| B | 3 | & | get value from arrdess |  |
+| B | 0 | # | Immediately value to Acc |  |
+| B | 1 | $ | Immediately value to Register |  |
+| B | 2 | % | Immediately value to Stack |  |
+| B | 3 | & | Get value from address |  |
 | B | 4 | MVRR | MOVE Register value to another Register{x} |  |
 | B | 5 | MVRS | MOVE Register value to Stack |  |
 | B | 6 | MVSR | MOVE Stack value to Register |  |
@@ -102,10 +102,10 @@ Min 256MB
 | A | 2 | PLY | play sound |  |
 | A | 3 | PLYS | play a series of sound |  |
 | A | 4 | DPXY | draw 8 * x pixels at (x, y) |  |
-| A | 5 | SCRU | screen scrool up x pixel |  |
-| A | 6 | SCRD | screen scrool down x pixel |  |
-| A | 7 | SCRL | screen scrool left x pixel |  |
-| A | 8 | SCRR | screen scrool right x pixel |  |
+| A | 5 | SCRU | Screen scrool up x pixel |  |
+| A | 6 | SCRD | Screen scrool down x pixel |  |
+| A | 7 | SCRL | Screen scrool left x pixel |  |
+| A | 8 | SCRR | Screen scrool right x pixel |  |
 | A | 9 | DXY | draw pointer at (x, y) |  |
 | A | A | DCXY | draw char at (x, y) |  |
 | 5 | 0 | TIMER | timer |  |
