@@ -25,7 +25,9 @@ Min 256MB
 
 ### Memory Distributed
 
-.......
+1. Program BEGIN address
+2. DATA address
+3. MAIN address
 
 ### Register Specific
 
@@ -40,7 +42,6 @@ Min 256MB
 |7.Stack Register      | S{0...7}    |8 * 32bit|
 |8.Exception Register | EX |8bit|
 >  Total count：6 + 32 + 8 * 32 = 294
-
 
 ### Instructions Specific
 - 4bit Instruction Code
@@ -111,6 +112,8 @@ Min 256MB
 | 5 | 0 | TIMER | timer |  |
 | 5 | 1 | CLS | clear screen |  |
 | 5 | 2 | RSTR | reset all Register |  |
+| 5 | 3 | START | Start vm |  |
+| 5 | 4 | STOP | Stop vm |  |
 
 ## Instructions Set
 ### F0 : GOTO

@@ -1,0 +1,12 @@
+START:
+    MAIN 0H
+MAIN:;-----; main
+    $ R0, #5 ;; var a = 5
+    $ R1, #0 ;; var b = 0
+    CALL LOOP ;; loop(a,b)
+
+LOOP:;-----;
+     DECR R0 ;; a = - 1
+     CMRRE R0, R1 ;; if a == 0
+     STOP ;; end
+     CALL LOOP ;; else next loop
