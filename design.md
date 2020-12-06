@@ -93,9 +93,10 @@ Min 256MB
 | B | 0 | # | immediately value to Acc |  |
 | B | 1 | $ | immediately value to Register |  |
 | B | 2 | % | immediately value to Stack |  |
-| B | 3 | MVRR | MOVE Register value to another Register{x} |  |
-| B | 4 | MVRS | MOVE Register value to Stack |  |
-| B | 5 | MVSR | MOVE Stack value to Register |  |
+| B | 3 | & | get value from arrdess |  |
+| B | 4 | MVRR | MOVE Register value to another Register{x} |  |
+| B | 5 | MVRS | MOVE Register value to Stack |  |
+| B | 6 | MVSR | MOVE Stack value to Register |  |
 | A | 0 | INTK | wait key interupt |  |
 | A | 1 | KEY | get key |  |
 | A | 2 | PLY | play sound |  |
