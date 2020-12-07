@@ -25,10 +25,25 @@ Min 256MB
 
 ### Memory Distributed
 
-1. Program BEGIN address
-2. DATA address
-3. MAIN address
+1. Program address
+Program address default is `0x0H`
+2. MAIN address
+MAIN address default is `0x0H`
+You can use `START` label assign main address
+```C
+START:
+    MAIN 0H
+MAIN:;; main
+    $ R0, #5 ;; var a = 5
+    $ R1, #0 ;; var b = 0
+    CALL LOOP ;; loop(a,b)
 
+LOOP:;; loop
+     DECR R0 ;; a = a - 1
+     CMRRE R0, R1 ;; if a == 0
+     STOP ;; end
+     CALL LOOP ;; else next loop
+```
 ### Register Specific
 
 |Name         | Symbol   |  Description  |
