@@ -6,8 +6,10 @@
 //
 
 #include <stdio.h>
-#include "log.h"
+#include "vm.h"
 int main(int argc, char *argv[]){
-    log_info("HelloWorld\n");
+    log_set_level(LOG_DEBUG);
+    vm * openvm = new_vm();
+    load_rom("/Users/wangwenhai/github/OpenVM/res/test.vmc", openvm);
     return 0;
 }

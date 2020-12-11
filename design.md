@@ -30,19 +30,10 @@ Program address default is `0x0H`
 2. MAIN address
 MAIN address default is `0x0H`
 You can use `START` label assign main address
-```C
+```assembly
 START:
     MAIN 0H
-MAIN:;; main
-    $ R0, #5 ;; var a = 5
-    $ R1, #0 ;; var b = 0
-    CALL LOOP ;; loop(a,b)
-
-LOOP:;; loop
-     DECR R0 ;; a = a - 1
-     CMRRE R0, R1 ;; if a == 0
-     STOP ;; end
-     CALL LOOP ;; else next loop
+END
 ```
 ### Register Specific
 
@@ -106,13 +97,14 @@ LOOP:;; loop
 | C | B | BSRS | bit shift right in Stack |  |
 | C | C | BSLLS | bit shift left loop in Stack |  |
 | C | D | BSRLS | bit shift right loop in Stack |  |
-| B | 0 | # | Immediately value to Acc |  |
-| B | 1 | $ | Immediately value to Register |  |
-| B | 2 | % | Immediately value to Stack |  |
-| B | 3 | & | Get value from address |  |
+| B | 0 | IMA | Immediately value to Acc |  |
+| B | 1 | IMR | Immediately value to Register |  |
+| B | 2 | IMS | Immediately value to Stack |  |
+| B | 3 | GET | Get value from address |  |
 | B | 4 | MVRR | MOVE Register value to another Register{x} |  |
 | B | 5 | MVRS | MOVE Register value to Stack |  |
 | B | 6 | MVSR | MOVE Stack value to Register |  |
+| B | 7 | MVAR | MOVE Acc value to Register |  |
 | A | 0 | INTK | wait key interupt |  |
 | A | 1 | KEY | get key |  |
 | A | 2 | PLY | play sound |  |
@@ -129,6 +121,9 @@ LOOP:;; loop
 | 5 | 2 | RSTR | reset all Register |  |
 | 5 | 3 | START | Start vm |  |
 | 5 | 4 | STOP | Stop vm |  |
+##### *Notice:*
+
+> All instruction return value is store in passtive side. Such `MOVSR {Rx}` means move stack value to register ,passtive side is register.But in `INCA` means Acc increase 1 and return value to Acc.
 
 ## Instructions Set
 ### F0 : GOTO
@@ -142,13 +137,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -167,13 +162,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -193,13 +188,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -219,13 +214,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -245,13 +240,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -271,13 +266,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -297,13 +292,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -323,13 +318,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -349,13 +344,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -375,13 +370,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -401,13 +396,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -428,13 +423,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -455,13 +450,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -482,13 +477,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -509,13 +504,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -536,13 +531,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -563,13 +558,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -590,13 +585,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -617,13 +612,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -644,13 +639,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -671,13 +666,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -698,13 +693,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -725,13 +720,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -752,13 +747,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -779,13 +774,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -806,13 +801,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -833,13 +828,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -860,13 +855,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -885,13 +880,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -910,13 +905,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -937,13 +932,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -964,13 +959,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -991,13 +986,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1018,13 +1013,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1045,13 +1040,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1072,13 +1067,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1099,13 +1094,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1126,13 +1121,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1153,13 +1148,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1180,13 +1175,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1207,13 +1202,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1234,13 +1229,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1261,13 +1256,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1288,13 +1283,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1315,13 +1310,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1342,13 +1337,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1369,13 +1364,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1396,13 +1391,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1423,13 +1418,13 @@ LOOP:;; loop
 #### Example
 - HEX:
 
-    ```c
+    ```assembly
     F00xFFFF
     ```
 
 - ASM:
 
-    ```c
+    ```assembly
     GOTO 0xFFF
     ```
 
@@ -1437,20 +1432,59 @@ LOOP:;; loop
 
 > some notice....
 
+## VM Program Specific
+### Reserved Keywords
+- START: used for start vm
+- MAIN: main like c
+- END: sub process end label
+- STOP: stop vm
 
+##### *Notice:*
+> Can't use those words in user program!
+
+### Program text format
+```assembly
+START:
+    MAIN 0H
+END
+
+MAIN:
+    ;;
+END
+
+SUB1:
+   ;;
+END
+
+SUB2:
+   ;;
+END
+```
 
 ## Program Example
+```assembly
+;; Example program
+;;
+START:
+    MAIN 00H ;; program start at 0H
+END
+;; main
+;; |00|01|02|03|04|05|06|07|
+MAIN:
+    IA 0              ;; ACC = 0
+    IR R0 #1          ;; R0 = 1
+    ADDAR R0          ;; ACC = ACC + R0
+    CALL DISPLAY      ;; Call display
+    CALL ADD          ;;
+    STOP              ;;
+END
+;; display sub process
+ADD:
+    CALL DISPLAY
+END
 
-### Arithmetic
+DISPLAY:
+    DCXY 40, 50, ACC ;; Display value in ACC
+END
 
-### Loop
-
-### Sub process
-
-### Branch
-
-### Graphics
-
-### Network
-
-
+```
