@@ -2,12 +2,7 @@
 
 ## VM Specific
 ### RAM
-
 16MB - 4GB rom 
-
-### ROM
-
-Min 256MB
 
 ### Register
 
@@ -20,6 +15,8 @@ Min 256MB
 ## VM Model
 
 ### Basic Structure
+
+The open vm is a virtual CPU simulator,It contains RAM,ROM,CPU,External Interface,like picture at bellow:
 
 ![](res/model.png)
 
@@ -35,74 +32,79 @@ START:
     MAIN 0H
 END
 ```
-### Register Specific
+### Register Distributed
 
-|Name         | Symbol   |  Description  |
-|  ----  | ----  | ----|
-|1.Addressing Register       | A      |8bit|
-|2.Accumulator       | ACC     |32bit|
-|3.Program counter    | PC      |32bit|
-|4.Stack index pointer  | SP      |8bit |
-|5.Stack deepth pointer  | SD      |8bit |
-|6.General Register    | R{0...31}   |32 * 32bit|
-|7.Stack Register      | S{0...7}    |8 * 32bit|
-|8.Exception Register | EX |8bit|
->  Total count：6 + 32 + 8 * 32 = 294
+Register use `0-65536` , ` 2 bytes` address.Those address can't be accessed by user program.
+
+|Name         | Symbol   | Size | Address |
+|  ----  | ----  | ----|  ----  |
+|Addressing Register       | A      | 4byte | 0 |
+|Accumulator       | ACC     | 4byte |  |
+|Program counter    | PC      | 4byte |  |
+|Stack index pointer  | SP      | 4byte |  |
+|Stack deepth pointer  | SD      | 4byte |  |
+|Exception Register | EX | 4byte |  |
+|General Register    | R{0...31}   | 4byte(per) |  |
+|Stack Register      | S{0...7}    | 4byte(per) |  |
+
 
 ### Instructions Specific
-- 4bit Instruction Code
-- 4bit Function Code
-- UNFIXED LENGTH segment
 
-### Instructions Preview Table
+Instruction have fixed header: 1 bit be splited two content,high 4bit is **Instruction Code**,low 4bit is **Function Code**,least is other segment,it maybe address or register.
+
+| Instruction Code | Function Code | UNFIXED LENGTH segment |
+| ---------------- | ------------- | ---------------------- |
+| 4bit             | 4bit          | Other segment          |
+
+### Instructions Preview
 | Instruction Code | Function Code | Symbol   |  Function  | Byte Size |
 |  ----  | ----  | ------- | ------------ |  ----  |
-| F      |   0   | GOTO    | GOTO ADDress |  |
-| F      |   1   | JNOC    | JUMP no condition |  |
-| F      |   2   | CALL    | CALL SUB process |  |
-| F      |   3   | BACK    | RETURN from SUB process |  |
-| E      |   0   | CMRAE | COMPARE R{x} if equal Acc |  |
-| E      |   1   | CMRAG | COMPARE R{x} if greater than Acc |  |
-| E      |   2   | CMRAL | COMPARE R{x} if little than Acc |  |
-| E      |   3   | CMRRE | COMPARE R{x} if equal R{x} |  |
-| E      |   4   | CMRRG | COMPARE R{x} if greater than R{x}          |  |
-| E      |   5   | CMRRL | COMPARE R{x} if little than R{x}           |  |
-| E      |   6   | CMASE | COMPARE Acc if equal than Stack |  |
-| E      |   7   | CMASG | COMPARE Acc if greater than Stack |  |
-| E      |   8   | CMASL | COMPARE Acc if little than Stack |  |
-| E      |   9   | CMRSE | COMPARE R{x} if little than Stack |  |
-| E      |   A   | CMRSG | COMPARE R{x} if greater than Stack |  |
-| E      |   B   | CMRSL | COMPARE R{x} if little than Stack |  |
-| D      |   0   | INCA | INCREASE Acc |  |
-| D      |   1   | DECA | DECREASE Acc |  |
-| D      |   2   | INCR | INCREASE Register{x} |  |
-| D      |   3   | DECR | DECREASE Register{x} |  |
-| D      |   4   | ADDAR | ADD Acc and Register{x} |  |
-| D      |   5   | SUBAR | SUB Acc and Register{x} |  |
-| D      |   6   | INCS | INCREASE Stack |  |
-| D      |   7   | DECS | DECREASE Stack |  |
-| D      |   8   | ADDAS | ADD Acc and Stack |  |
-| D      |   9   | SUBAS | SUB Acc and Stack |  |
-| C | 0 | ANDR | Acc AND Register{x} |  |
-| C | 1 | AOR | Acc OR Register{x} |  |
-| C | 2 | AXR | Acc XOR Register{x} |  |
-| C | 3 | BSLR | bit shift left in Register{x} |  |
-| C | 4 | BSRR | bit shift right in Register{x} |  |
-| C | 5 | BSLLR | bit shift left loop in Register{x} |  |
-| C | 6 | BSRLR | bit shift right loop in Register{x} |  |
-| C | 7 | ANDS | Acc AND Stack |  |
-| C | 8 | AOS | Acc OR Stack |  |
-| C | 9 | AXS | Acc XOR Stack |  |
-| C | A | BSLS | bit shift left in Stack |  |
-| C | B | BSRS | bit shift right in Stack |  |
-| C | C | BSLLS | bit shift left loop in Stack |  |
-| C | D | BSRLS | bit shift right loop in Stack |  |
-| B | 0 | IMA | Immediately value to Acc |  |
-| B | 1 | IMR | Immediately value to Register |  |
-| B | 2 | IMS | Immediately value to Stack |  |
-| B | 3 | GET | Get value from address |  |
-| B | 4 | MVRR | MOVE Register value to another Register{x} |  |
-| B | 5 | MVRS | MOVE Register value to Stack |  |
+| F      |   0   | GOTO    | GOTO ADDress | 1+4 |
+| F      |   1   | JNOC    | JUMP no condition | 1+4 |
+| F      |   2   | CALL    | CALL SUB process | 1+4 |
+| F      |   3   | BACK    | RETURN from SUB process | 1+4 |
+| E      |   0   | CMRAE | COMPARE R{x} if equal Acc | 1+1 |
+| E      |   1   | CMRAG | COMPARE R{x} if greater than Acc | 1+1 |
+| E      |   2   | CMRAL | COMPARE R{x} if little than Acc | 1+1 |
+| E      |   3   | CMRRE | COMPARE R{x} if equal R{x} | 1+2 |
+| E      |   4   | CMRRG | COMPARE R{x} if greater than R{x}          | 1+2 |
+| E      |   5   | CMRRL | COMPARE R{x} if little than R{x}           | 1+2 |
+| E      |   6   | CMASE | COMPARE Acc if equal than Stack | 1+2 |
+| E      |   7   | CMASG | COMPARE Acc if greater than Stack | 1+2 |
+| E      |   8   | CMASL | COMPARE Acc if little than Stack | 1+2 |
+| E      |   9   | CMRSE | COMPARE R{x} if little than Stack | 1+3 |
+| E      |   A   | CMRSG | COMPARE R{x} if greater than Stack | 1+3 |
+| E      |   B   | CMRSL | COMPARE R{x} if little than Stack | 1+3 |
+| D      |   0   | INCA | INCREASE Acc | 1 |
+| D      |   1   | DECA | DECREASE Acc | 1 |
+| D      |   2   | INCR | INCREASE Register{x} | 1+1 |
+| D      |   3   | DECR | DECREASE Register{x} | 1+1 |
+| D      |   4   | ADDAR | ADD Acc and Register{x} | 1+1 |
+| D      |   5   | SUBAR | SUB Acc and Register{x} | 1+1 |
+| D      |   6   | INCS | INCREASE Stack | 1+2 |
+| D      |   7   | DECS | DECREASE Stack | 1+2 |
+| D      |   8   | ADDAS | ADD Acc and Stack | 1+2 |
+| D      |   9   | SUBAS | SUB Acc and Stack | 1+2 |
+| C | 0 | ANDR | Acc AND Register{x} | 1+1 |
+| C | 1 | AOR | Acc OR Register{x} | 1+1 |
+| C | 2 | AXR | Acc XOR Register{x} | 1+1 |
+| C | 3 | BSLR | bit shift left in Register{x} | 1+1 |
+| C | 4 | BSRR | bit shift right in Register{x} | 1+1 |
+| C | 5 | BSLLR | bit shift left loop in Register{x} | 1+1 |
+| C | 6 | BSRLR | bit shift right loop in Register{x} | 1+1 |
+| C | 7 | ANDS | Acc AND Stack | 1+2 |
+| C | 8 | AOS | Acc OR Stack | 1+2 |
+| C | 9 | AXS | Acc XOR Stack | 1+2 |
+| C | A | BSLS | bit shift left in Stack | 1+2 |
+| C | B | BSRS | bit shift right in Stack | 1+2 |
+| C | C | BSLLS | bit shift left loop in Stack | 1+2 |
+| C | D | BSRLS | bit shift right loop in Stack | 1+2 |
+| B | 0 | IMA | Immediately value to Acc | 1+4 |
+| B | 1 | IMR | Immediately value to Register | 1+5 |
+| B | 2 | IMS | Immediately value to Stack | 1+6 |
+| B | 3 | GET | Get value from address | 1+4 |
+| B | 4 | MVRR | MOVE Register value to another Register{x} | 1+2 |
+| B | 5 | MVRS | MOVE Register value to Stack | 1+2 |
 | B | 6 | MVSR | MOVE Stack value to Register |  |
 | B | 7 | MVAR | MOVE Acc value to Register |  |
 | A | 0 | INTK | wait key interupt |  |
@@ -114,7 +116,7 @@ END
 | A | 6 | SCRD | Screen scrool down x pixel |  |
 | A | 7 | SCRL | Screen scrool left x pixel |  |
 | A | 8 | SCRR | Screen scrool right x pixel |  |
-| A | 9 | DXY | draw pointer at (x, y) |  |
+| A | 9 | DXY | draw point at (x, y) |  |
 | A | A | DCXY | draw char at (x, y) |  |
 | 5 | 0 | TIMER | timer |  |
 | 5 | 1 | CLS | clear screen |  |
@@ -1464,27 +1466,29 @@ END
 ## Program Example
 ```assembly
 ;; Example program
-;;
 START:
     MAIN 00H ;; program start at 0H
 END
 ;; main
-;; |00|01|02|03|04|05|06|07|
 MAIN:
     IA 0              ;; ACC = 0
     IR R0 #1          ;; R0 = 1
     ADDAR R0          ;; ACC = ACC + R0
     CALL DISPLAY      ;; Call display
-    CALL ADD          ;;
     STOP              ;;
 END
 ;; display sub process
-ADD:
-    CALL DISPLAY
-END
-
 DISPLAY:
     DCXY 40, 50, ACC ;; Display value in ACC
 END
 
 ```
+
+## VM Byte Code Specific
+
+Byte Code header contains 4byte file type,and 3byte version,4byte address:
+
+| Type |      |      |      | Version |      |      | Start Address |      |      |      |
+| ---- | ---- | ---- | ---- | ------- | ---- | ---- | ------------- | ---- | ---- | ---- |
+| V    | M    | B    | C    | 0       | 0    | 1    | 0             | 0    | 0    | 0    |
+

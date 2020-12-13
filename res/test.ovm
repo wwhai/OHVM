@@ -4,20 +4,14 @@ START:
     MAIN 00H ;; program start at 0H
 END
 ;; main
-;; |00|01|02|03|04|05|06|07|
 MAIN:
-    IA 0              ;; ACC = 0
-    IR R0 #1          ;; R0 = 1
-    ADDAR R0          ;; ACC = ACC + R0
-    CALL DISPLAY      ;; Call display
-    CALL ADD          ;;
-    STOP              ;;
+    IMA #0              ;; ACC = 0        B00x0000
+    IMR R0 #1           ;; R0 = 1         B1
+    ADDAR R0           ;; ACC = ACC + R0  D4
+    CALL DISPLAY       ;; Call display    F2
+    STOP               ;; Stop
 END
 ;; display sub process
-ADD:
-    CALL DISPLAY
-END
-
 DISPLAY:
     DCXY 40, 50, ACC ;; Display value in ACC
 END

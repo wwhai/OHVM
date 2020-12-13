@@ -2,7 +2,7 @@
 //  main.c
 //  OpenVM
 //
-//  Created by 王文海 on 2020/11/26.
+//  Created by wwhai on 2020/11/26.
 //
 
 #include <stdio.h>
@@ -10,6 +10,7 @@
 int main(int argc, char *argv[]){
     log_set_level(LOG_DEBUG);
     vm * openvm = new_vm();
-    load_rom("/Users/wangwenhai/github/OpenVM/res/test.vmc", openvm);
+    load_vmbc("/Users/wangwenhai/github/OpenVM/res/test_nop.ovmbc", openvm);
+    run_bc(openvm);
     return 0;
 }

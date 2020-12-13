@@ -2,7 +2,7 @@
 //  vm.h
 //  OpenVM
 //
-//  Created by 王文海 on 2020/11/25.
+//  Created by wwhai on 2020/11/25.
 //
 
 #ifndef vm_h
@@ -11,35 +11,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "log.h"
-// Flags: |0|0|0|0|0|0|0|0|
-typedef struct
-{
+#include "types.h"
+// Max byte code size
+// Develop use 1kb
+#define MAX_RAM_SIZE 1024
+// Max stack deepth
+#define MAX_STACK_DEEPTH 1024
+// Max register count
+#define MAX_REGISTER_COUNT 64
 
-} flag;
 // vm
-typedef struct
+typedef struct __attribute__((__packed__))
 {
-    // Program begining
-    unsigned short program_begin;
-    // 4MB RAM
-    unsigned short ram[1024 * 1024 * 4];
-    // Stack pointer
-    unsigned short sp;
-    // 8MB ROM
-    unsigned short rom[1024 * 1024 * 8];
-    // 64 registers
-    unsigned int r[64];
-    // 1024 deepth stack
-    unsigned short stack[1024];
-    // PC: INT
-    unsigned int pc;
-    // flag
-    flag f;
+    // RAM
+    byte ram[MAX_RAM_SIZE];
+    // user programe start address
+    uint32 start_address;
+    // stack pointer
+    uint32 sp;
+    // address pointer
+    uint32 a;
+    // acc
+    uint32 acc;
+    // pc
+    uint32 pc;
+    // stack deepth
+    uint32 sd;
+    // exception
+    uint32 ex;
+    // stack register
+    uint32 stack[MAX_STACK_DEEPTH];
+    // general register
+    uint32 r[MAX_REGISTER_COUNT];
+    // Flags: |0|0|0|0|0|0|0|0|
+    struct
+    {
+        // Maybe have some flag
+    } flag;
 } vm;
 // Initial
-void init_vm(vm* vm);
+void init_vm(vm *vm);
 // new vm
-vm* new_vm();
-// load rom
-void load_rom(char* path, vm* vm);
+vm *new_vm();
+// load byte code
+void load_vmbc(char *path, vm *vm);
+// run byte code
+void run_bc(vm *vm);
+// Instructions table
+
 #endif /* vm_h */
