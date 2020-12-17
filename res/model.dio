@@ -1,6 +1,6 @@
-<mxfile host="65bd71144e" modified="2020-12-11T14:48:14.874Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.51.1 Chrome/83.0.4103.122 Electron/9.3.3 Safari/537.36" etag="jYAaJE89OCPnXMpydYlc" version="13.10.0" type="embed">
+<mxfile host="65bd71144e" modified="2020-12-17T14:29:08.060Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.0 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="P_5AX8FaC4xdLWM31CNa" version="13.10.0" type="embed">
     <diagram id="NbtpkB8BgfAw_VZ1BtPf" name="Page-1">
-        <mxGraphModel dx="1133" dy="1186" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFAFA" math="0" shadow="0">
+        <mxGraphModel dx="566" dy="356" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFAFA" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -24,7 +24,7 @@
                         <mxPoint x="178" y="415" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8">
+                <mxCell id="13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="8" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="178" y="409.9999999999998" as="targetPoint"/>
                     </mxGeometry>
@@ -37,7 +37,7 @@
                         <mxPoint x="420.5" y="415" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="10">
+                <mxCell id="14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="10" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="420.5000000000002" y="419.9999999999998" as="targetPoint"/>
                     </mxGeometry>
@@ -45,8 +45,35 @@
                 <mxCell id="10" value="IO Device" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" parent="1" vertex="1">
                     <mxGeometry x="348" y="485" width="145" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#050505;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="15" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#050505;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="40" y="30" width="760" height="620" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="VMBC" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fontColor=#ffffff;fillColor=#1ba1e2;" vertex="1" parent="1">
+                    <mxGeometry x="95" y="885" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="Version" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="255" y="885" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Start Address" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fontColor=#ffffff;fillColor=#0050ef;" vertex="1" parent="1">
+                    <mxGeometry x="375" y="885" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Byte Code" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#432D57;fontColor=#ffffff;fillColor=#76608a;" vertex="1" parent="1">
+                    <mxGeometry x="535" y="885" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#10739e;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="85" y="859" width="624" height="109" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="&quot;VMBC&quot; 4 Byte" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#050505;" vertex="1" parent="1">
+                    <mxGeometry x="115" y="936" width="122" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="XYZ 3Byte" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#050505;" vertex="1" parent="1">
+                    <mxGeometry x="281" y="936" width="68" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="Start Address 4Byte" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#050505;" vertex="1" parent="1">
+                    <mxGeometry x="390.5" y="937" width="129" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="ByteCode" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#050505;" vertex="1" parent="1">
+                    <mxGeometry x="595" y="936" width="40" height="20" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

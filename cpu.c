@@ -6,22 +6,25 @@
 //
 
 #include "cpu.h"
+#include "utils.h"
+#include "vm.h"
+#include "execute_function.h"
 //
 byte get_instruction(vm *vm)
 {
-    return 0;
-}
-// Parse instruction
-vm_instruction parse_instruction(byte instruction)
-{
-    byte operate_code = (instruction >> 4) & 1;
-    byte function_code = ((instruction << 4) >> 4) & 1;
-    vm_instruction i = {operate_code, function_code};
-    byte result[2] = {operate_code, function_code};
-    return i;
+    byte address = get_pc(vm);
+    if (address > 0x4F)
+    {
+        return 0x00;
+    }
+    else
+    {
+        return address;
+    }
 }
 // return pc next offset bytes
 int execute(vm *vm)
 {
+    operate_functions[get_instruction(vm)](vm);
     return 0;
 }

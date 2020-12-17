@@ -21,23 +21,24 @@
 #define MAX_REGISTER_COUNT 64
 // Internal address
 #define INTERNAL_ADDRESS_SIZE 1024
+// INSTRUCTIONS_COUNT
+#define INSTRUCTIONS_COUNT 0xfF
 /**
 * Special register address
 */
 // Null
-#define NULLPTR 0x0000F
-// A pointer
-#define A 0x0001F
-// ACC pointer
-#define ACC 0x0002F
-// PC pointer
-#define PC 0x0003F
-// Stack Deepth
-#define SD 0x0004F
+#define NULLPTR 0
+// ACC pointer 4byte 0x01 - 0x05
+#define ACC 1 //1
+// PC pointer 4byte 0x06 - 0x0A
+#define PC 1 + 4 // 5
+// Stack Deepth 0x0A - 0x0E
+#define SD 1 + 4 + 4 // 9
 // Stack pointer
-#define SP 0x0005F
+#define SP 1 + 4 + 4 + 4 // 13
 // Exception pointer
-#define EX 0x0006F
+#define EX 1 + 4 + 4 + 4 + 1 // 15
+
 /**
 * VM
 */
@@ -79,10 +80,16 @@ typedef struct __attribute__((__packed__))
         bool f8 : true;
     } flag;
 } vm;
-// Initial
-void init_vm(vm *vm);
+// operate_function
+typedef void (*operate_function)(vm *vm);
+//
+operate_function operate_functions[INSTRUCTIONS_COUNT];
 // new vm
 vm *new_vm();
+// Initial
+void init_vm(vm *vm);
+// Load
+void load_instrucsions(operate_function *operate_functions);
 // load byte code
 void load_vmbc(char *path, vm *vm);
 // run byte code
@@ -103,7 +110,7 @@ uint32 get_a(vm *vm);
 void set_acc(byte value, vm *vm);
 uint32 get_acc(vm *vm);
 // set/get value to/from pc
-void set_pc(byte value, vm *vm);
+void set_pc(uint32 value, vm *vm);
 uint32 get_pc(vm *vm);
 // set/get value to/from sd
 void set_sd(byte value, vm *vm);

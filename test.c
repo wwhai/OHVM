@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int test_bc()
+int compile_bc(unsigned char *bc, int length)
 {
     FILE *file = fopen("test_nop.ovmbc", "wb");
     if (!file)
@@ -8,16 +8,21 @@ int test_bc()
         printf("Unable to open file!");
         return 1;
     }
-    char type[4] = "VMBC";
     unsigned char v1 = 0, v2 = 0, v3 = 1;
     unsigned int start_address = 0;
-    unsigned char demo[] = {0xB0, 0x0, 0x0, 0x0, 0x1};
-    fwrite(type, 4, 1, file);
+    fwrite("VMBC", 4, 1, file);
     fwrite(&v1, 1, 1, file);
     fwrite(&v2, 1, 1, file);
     fwrite(&v3, 1, 1, file);
     fwrite(&start_address, 4, 1, file);
-    fwrite(demo, 4, 1, file);
+    fwrite(bc, length, 1, file);
     fclose(file);
+    return 0;
+}
+// rm -rf ./test_nop.ovmbc && gcc test.c -o test && ./test && rm -rf test && xxd test_nop.ovmbc
+int main(int argc, char const *argv[])
+{
+    unsigned char bc[] = {0x0000, 0x0001, 0x0002};
+    compile_bc(bc, sizeof(bc));
     return 0;
 }

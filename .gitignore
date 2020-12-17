@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+launch*
+main.ds*
+openvm.dS*
+tasks.dS*
+main
+openvm
+tasks
+rebar.lock
+debug/**

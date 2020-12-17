@@ -17,10 +17,12 @@
 #define new_object(T) (T *)malloc(sizeof(T))
 // byte
 typedef unsigned char byte;
-// uint32
-typedef unsigned int uint32;
+// uint8
+typedef unsigned char uint8;
 // uint16
 typedef unsigned short uint16;
+// uint32
+typedef unsigned int uint32;
 // Bytecode info
 typedef struct __attribute__((__packed__))
 {

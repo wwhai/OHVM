@@ -12,14 +12,5 @@
 #include "types.h"
 #include "vm.h"
 #include "cpu.h"
-// Operate function
-typedef void (*function)(vm *vm);
-// Mapping table
-typedef struct i_f_mapping
-{
-    vm_instruction instruction;
-    function f;
-    struct i_f_mapping *next;
-} i_f_mapping;
 
 #endif

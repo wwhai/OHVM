@@ -8,6 +8,22 @@
 #include "vm.h"
 #include "log.h"
 #include "types.h"
+#include "cpu.h"
+#include "execute_function.h"
+#include <string.h>
+// Load Instructions
+void load_instrucsions(operate_function *operate_functions)
+{
+  operate_functions[0x0000] = NOP;
+  operate_functions[0x0001] = START;
+  operate_functions[0x0002] = STOP;
+  operate_functions[0x0003] = RSTR;
+  operate_functions[0x0004] = TIMER;
+  operate_functions[0x0005] = GOTO;
+  operate_functions[0x0006] = JNOC;
+  operate_functions[0x0007] = CALL;
+  operate_functions[0x0008] = BACK;
+}
 // Initial
 void init_vm(vm *vm)
 {
@@ -19,7 +35,10 @@ void init_vm(vm *vm)
   vm->bc_size = 0;
   // Init ram
   reset_ram(vm);
+  // Load Instructions
+  load_instrucsions(operate_functions);
 }
+
 // new vm
 vm *new_vm()
 {
@@ -34,12 +53,10 @@ vm *new_vm()
  * */
 void run_bc(vm *vm)
 {
-  //  vm_instruction vm_inst = parse_instruction(vm->ram[i]);
-  // 1 CPU get an insgtruction
-  // 2 Parse operate code and function code
-  // 3 According operate code and function code
-  // 4 PC = Next instruction address
-  // 5 Goto 1
+  while (true)
+  {
+    execute(vm);
+  }
 }
 // Load bytecode
 void load_vmbc(char *path, vm *vm)
@@ -71,7 +88,7 @@ void load_vmbc(char *path, vm *vm)
     log_debug("Bytecode file size:%d byte size:%d", bc_file_size, bytecode_length);
     for (size_t i = INTERNAL_ADDRESS_SIZE; i < INTERNAL_ADDRESS_SIZE + bytecode_length; i++)
     {
-      set_ram(i, bytecode[i], vm);
+      set_ram(i, bytecode[i - INTERNAL_ADDRESS_SIZE], vm);
     }
     fclose(file);
   }
@@ -126,15 +143,7 @@ uint32 get_start_address(vm *vm)
 {
   return vm->start_address;
 }
-// set/get an address to/from address register
-void set_a(byte value, vm *vm)
-{
-  vm->ram[A] = value;
-}
-uint32 get_a(vm *vm)
-{
-  return vm->ram[A];
-}
+
 // set/get value to/from acc
 void set_acc(byte value, vm *vm)
 {
@@ -145,13 +154,16 @@ uint32 get_acc(vm *vm)
   return vm->ram[ACC];
 }
 // set/get value to/from pc
-void set_pc(byte value, vm *vm)
+void set_pc(uint32 value, vm *vm)
 {
-  vm->ram[PC] = value;
+  memcpy(&vm->ram[PC], &value, sizeof(uint32));
 }
 uint32 get_pc(vm *vm)
 {
-  return vm->ram[PC];
+  void *value = calloc(sizeof(byte), 4);
+  byte bytes[4] = {vm->ram[PC] + 0, vm->ram[PC] + 1, vm->ram[PC] + 2, vm->ram[PC] + 3};
+  memcpy(value, bytes, 1);
+  return *((uint32 *)value);
 }
 // set/get value to/from sd
 void set_sd(byte value, vm *vm)
