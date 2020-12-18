@@ -1,7 +1,6 @@
 #ifndef execute_function_h
 #define execute_function_h
 #include "vm.h"
-// see design.md
 void NOP(vm *vm);
 void START(vm *vm);
 void STOP(vm *vm);

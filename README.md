@@ -43,20 +43,18 @@ END
 
 Those address can't be accessed by user program.
 
-| Name                 | Symbol    | Size       | Address |
-| -------------------- | --------- | ---------- | ------- |
-| Addressing Register  | A         | 4byte      | 1       |
-| ACCumulator          | ACC       | 4byte      | 2       |
-| Program counter      | PC        | 4byte      | 3       |
-| Stack index pointer  | SP        | 4byte      | 4       |
-| Stack deepth pointer | SD        | 4byte      | 5       |
-| Exception Register   | EX        | 4byte      | 6       |
-| General Register     | R{0...31} | 4byte(per) | 7-38    |
-| Stack Register       | S{0...7}  | 4byte(per) | 39-47   |
+| Name                 | Symbol    | Size       | Address   |
+| -------------------- | --------- | ---------- | --------- |
+| Addressing Register  | A         | 4byte      | 1         |
+| ACCumulator          | ACC       | 4byte      | 2         |
+| Program counter      | PC        | 4byte      | 3         |
+| Stack index pointer  | SP        | 4byte      | 4         |
+| Stack deepth pointer | SD        | 4byte      | 5         |
+| Exception Register   | EX        | 4byte      | 6         |
+| General Register     | R{0...31} | 4byte(per) | 7-38 x 4  |
+| Stack Register       | S{0...7}  | 4byte(per) | 39-47 x 8 |
 
 ### Instructions Specific
-
-Instruction have fixed header: 1 BIT be splited two content,high 4BIT is **Instruction Code**,low 4BIT is **Function Code**,least is other segment,it maybe address or register.
 
 | Instruction Code | UNFIXED LENGTH segment |
 | ---------------- | ---------------------- |
@@ -225,3 +223,29 @@ END
 Byte Code header contains 4byte file type,and 3byte version,4byte address:
 
 ![](res/bc-format.png)
+
+## Program Compiler
+
+- https://github.com/ssloth/OpenVM-AS
+
+### How to use
+
+```shell
+# ovmcc file
+ovmcc hello_world.ovm
+ls
+# hello_world.ovm hello_world.ovmbc
+```
+
+## Todo list
+- [x] Instructions Set Design
+- [ ] Project Structure Design
+- [ ] VM Core design
+- [ ] ASM Compiler Design
+- [ ] Programing VM Core
+- [ ] Programing Compiler
+
+## Resources
+
+- Blog: https://openlab.ezlinker.cn
+- Mail: cnwwhai@gmail.com
