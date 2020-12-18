@@ -22,7 +22,7 @@
 // Internal address
 #define INTERNAL_ADDRESS_SIZE 1024
 // INSTRUCTIONS_COUNT
-#define INSTRUCTIONS_COUNT 0xfF
+#define INSTRUCTIONS_COUNT 0xFF
 /**
 * Special register address
 */

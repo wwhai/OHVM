@@ -13,7 +13,7 @@
 byte get_instruction(vm *vm)
 {
     byte address = get_pc(vm);
-    if (address > 0x4F)
+    if (address > INSTRUCTIONS_COUNT)
     {
         return 0x00;
     }
