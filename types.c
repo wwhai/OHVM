@@ -10,5 +10,5 @@ void ovmbc_output(ovmbc *bc)
 {
     log_debug("File type:%s", bc->type);
     log_debug("Version:%d-%d-%d", bc->v_main, bc->v_progress, bc->v_bugfix);
-    log_debug("Start at:0x%032xH", bc->start_address);
+    log_debug("Start at:0x%016xH", bc->start_address);
 }
