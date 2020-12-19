@@ -18,7 +18,7 @@
 
 ### Basic Structure
 
-The open vm is a virtual CPU simulator,It contains RAM,ROM,CPU,External Interface,like picture at bellow:
+The open vm is a virtual CPU simulator,It contains RAM,CPU,External Interface,like picture at bellow:
 
 ![](res/model.png)
 
@@ -54,88 +54,104 @@ Those address can't be accessed by user program.
 | General Register     | R{0...31} | 4byte(per) | 7-38 x 4  |
 | Stack Register       | S{0...7}  | 4byte(per) | 39-47 x 8 |
 
+### Flags
+
+| Name      | Symbol | Size |
+| --------- | ------ | ---- |
+| Zero      | ZE     | 1bit |
+| Equal     | EQ     | 1bit |
+| Execption | EX     | 1bit |
+| Reserved  | --     | 1bit |
+| Reserved  | --     | 1bit |
+| Reserved  | --     | 1bit |
+| Reserved  | --     | 1bit |
+| Reserved  | --     | 1bit |
+
 ### Instructions Specific
 
 | Instruction Code | UNFIXED LENGTH segment |
 | ---------------- | ---------------------- |
 | 1 Byte           | Other segment          |
 
-### Instructions Preview
+### Instructions Set
 
-| Instruction Code | Symbol                      | Example                               | Function                                        |
-| ---------------- | --------------------------- | ------------------------------------- | ----------------------------------------------- |
-| 0x0000           | NOP                         | NOP                                   | No operation, used for delay                    |
-| 0x0001           | START                       | START                                 | Start vm                                        |
-| 0x0002           | STOP                        | STOP                                  | Stop vm                                         |
-| 0x0003           | RSTR                        | RSTR                                  | Reset all Register                              |
-| 0x0004           | TIMER [Register]            | MOVR R0 #5<br>TIMER R0                | Start Timer                                     |
-| 0x0005           | GOTO [Register]/[Label]     | GOTO LOOP<br>GOTO R0                  | GOTO ADDress                                    |
-| 0x0006           | JNOC [Register]/[Label]     | JNOC LOOP<br>JNOC R0                  | JUMP no condition                               |
-| 0x0007           | CALL [Register]/[Label]     | CALL LOOP<br>CALL R0                  | CALL SUB process                                |
-| 0x0008           | BACK                        |                                       | RETURN from SUB process                         |
-| 0x0009           | CMRAE [Register]            | MOV R0 #1<br>CMRAE                    | COMPARE R{x} if equal ACC                       |
-| 0x000A           | CMRAG [Register]            | MOV R0 #1<br>CMRAG                    | COMPARE R{x} if greater than ACC                |
-| 0x000B           | CMRAL [Register]            | MOV R0 #1<br>CMRAL                    | COMPARE R{x} if little than ACC                 |
-| 0x000C           | CMRRE [Register] [Register] | MOV R0 #1<br>MOV R1 #1<br>CMRRE R0 R1 | COMPARE R{x} if equal R{x}                      |
-| 0x000D           | CMRRG [Register] [Register] | MOV R0 #1<br>MOV R1 #1<br>CMRRG R0 R1 | COMPARE R{x} if greater than R{x}               |
-| 0x000E           | CMRRL [Register] [Register] | MOV R0 #1<br>MOV R1 #1<br>CMRRL R0 R1 | COMPARE R{x} if little than R{x}                |
-| 0x000F           | CMASE [Register] [Stack]    |                                       | COMPARE ACC if equal than Stack                 |
-| 0x0010           | CMASG [Register] [Stack]    |                                       | COMPARE ACC if greater than Stack               |
-| 0x0011           | CMASL [Register] [Stack]    |                                       | COMPARE ACC if little than Stack                |
-| 0x0012           | CMRSE [Register] [Stack]    |                                       | COMPARE R{x} if little than Stack               |
-| 0x0013           | CMRSG [Register] [Stack]    |                                       | COMPARE R{x} if greater than Stack              |
-| 0x0014           | CMRSL [Register] [Stack]    |                                       | COMPARE R{x} if little than Stack               |
-| 0x0015           | INCA                        |                                       | INCREASE ACC                                    |
-| 0x0016           | DECA                        |                                       | DECREASE ACC                                    |
-| 0x0017           | INCR                        |                                       | INCREASE Register{x}                            |
-| 0x0018           | DECR                        |                                       | DECREASE Register{x}                            |
-| 0x0019           | ADDAR [Register]            | MOV R0 #1<br>ADDAR R0                 | ADD ACC and Register{x}                         |
-| 0x001A           | SUBAR [Register]            | MOV R0 #1<br>SUBAR R0                 | SUB ACC and Register{x}                         |
-| 0x001B           | INCS                        |                                       | INCREASE Stack                                  |
-| 0x001C           | DECS                        |                                       | DECREASE Stack                                  |
-| 0x001D           | ADDAS [Stack]               |                                       | ADD ACC and Stack                               |
-| 0x001E           | SUBAS [Stack]               |                                       | SUB ACC and Stack                               |
-| 0x001F           | ANDR [Register]             | MOV R0 #1<br>ANDR R0                  | ACC AND Register{x}                             |
-| 0x0020           | AOR [Register]              | MOV R0 #1<br>AOR R0                   | ACC OR Register{x}                              |
-| 0x0021           | AXR [Register]              | MOV R0 #1<br>AXR R0                   | ACC XOR Register{x}                             |
-| 0x0022           | BSLR [Register]             | MOV R0 #1<br>BSLR R0                  | BIT Shift left in Register{x}                   |
-| 0x0023           | BSRR [Register]             | MOV R0 #1<br>BSRR R0                  | BIT Shift right in Register{x}                  |
-| 0x0024           | BSLLR [Register]            | MOV R0 #1<br>BSLLR R0                 | BIT Shift left loop in Register{x}              |
-| 0x0025           | BSRLR [Register]            | MOV R0 #1<br>BSRLR R0                 | BIT Shift right loop in Register{x}             |
-| 0x0026           | ANDS [Stack]                |                                       | ACC AND Stack                                   |
-| 0x0027           | AOS [Stack]                 |                                       | ACC OR Stack                                    |
-| 0x0028           | AXS [Stack]                 |                                       | ACC XOR Stack                                   |
-| 0x0029           | BSLS [Stack]                |                                       | BIT Shift left in Stack                         |
-| 0x002A           | BSRS [Stack]                |                                       | BIT Shift right in Stack                        |
-| 0x002B           | BSLLS [Stack]               |                                       | BIT Shift left loop in Stack                    |
-| 0x002C           | BSRLS [Stack]               |                                       | BIT Shift right loop in Stack                   |
-| 0x002D           | IMA #[Hex]                  |                                       | Immediately value to ACC                        |
-| 0x002E           | IMR #[Hex]                  |                                       | Immediately value to Register                   |
-| 0x002F           | IMS #[Hex]                  |                                       | Immediately value to Stack                      |
-| 0x0030           | GET [Register]              |                                       | Get value from address                          |
-| 0x0031           | MVRR [Register] [Register]  | MOV R0 #1<br>MOV R1 #1<br>MVRR R0 R1  | MOVE Register value to another Register{x}      |
-| 0x0032           | MVRS [Register] [Stack]     |                                       | MOVE Register value to Stack                    |
-| 0x0033           | MVSR [Register] [Register]  | MOV R0 #1<br>MOV R1 #1<br>MVRS R0 R1  | MOVE Stack value to Register                    |
-| 0x0034           | MVAR [Register]             |                                       | MOVE ACC value to Register                      |
-| 0x0035           | INTK                        |                                       | Wait key interupt                               |
-| 0x0036           | KEY                         |                                       | Get key                                         |
-| 0x0037           | PLY [Register]              | MOV R0 #1<br>PLY R0                   | Play dididi sound                               |
-| 0x0038           | PLYS [Register]             | MOV R0 #1<br>PLYS R0                  | Play a series of sound.Usually have a frequence |
-| 0x0039           | DPXY [Register]             | MOV R0 #1<br>DPXY R0                  | Draw 8 \* x pixels at (x, y)                    |
-| 0x003A           | SCRU                        |                                       | Screen scrool up x pixel                        |
-| 0x003B           | SCRD                        |                                       | Screen scrool down x pixel                      |
-| 0x003C           | SCRL                        |                                       | Screen scrool left x pixel                      |
-| 0x003D           | SCRR                        |                                       | Screen scrool right x pixel                     |
-| 0x003E           | DXY [Register]              | MOV R0 #1<br>DXY R0                   | Draw point at (x, y)                            |
-| 0x003F           | DCXY [Register]             | MOV R0 #1<br>DCXY R0                  | Draw char at (x, y)                             |
-| 0x0040           | CLS                         |                                       | Clear screen                                    |
-| 0x0041           | GSET [Register]             | MOV R0 #1<br>GSET R0                  | Graphics resolution setting, [64X32 - 640X320]  |
+| Instruction Code | Symbol                      | Example                               | Function                                             |
+| ---------------- | --------------------------- | ------------------------------------- | ---------------------------------------------------- |
+| 0X0000           | NOP                         | NOP                                   | No operation, used for delay                         |
+| 0X0001           | START                       | START                                 | Start vm                                             |
+| 0X0002           | STOP                        | STOP                                  | Stop vm                                              |
+| 0X0003           | RSTR                        | RSTR                                  | Reset all Register                                   |
+| 0X0004           | TIMER [Register]            | MOVR R0 #5<br>TIMER R0                | Start Timer                                          |
+| 0X0005           | GOTO [Register]/[Label]     | GOTO LOOP<br>GOTO R0                  | GOTO ADDress                                         |
+| 0X0006           | CALL [Register]/[Label]     | CALL LOOP<br>CALL R0                  | CALL SUB process                                     |
+| 0X0007           | BACK                        | BACK                                  | RETURN from SUB process                              |
+| 0X0008           | JMP [Register]/[Label]      | JMP LOOP                              | JUMP Address With No Condition                       |
+| 0X0009           | JZ [ACC] [Register]/[Label] | JZ LOOP                               | Compare with ACC, Jump Address if Zero Flag == 1     |
+| 0X000A           | JE [ACC] [Register]/[Label] | JE LOOP                               | Compare with ACC, Jump Address if Equal Flag == 1    |
+| 0X000B           | JX [ACC] [Register]/[Label] | JX LOOP                               | Compare with ACC, Jump Address if Excepion Flag == 1 |
+| 0X000C           | CMRAE [Register]            | MOV R0 #1<br>CMRAE                    | COMPARE R{x} if equal ACC                            |
+| 0X000D           | CMRAG [Register]            | MOV R0 #1<br>CMRAG                    | COMPARE R{x} if greater than ACC                     |
+| 0X000E           | CMRAL [Register]            | MOV R0 #1<br>CMRAL                    | COMPARE R{x} if little than ACC                      |
+| 0X000F           | CMRRE [Register] [Register] | MOV R0 #1<br>MOV R1 #1<br>CMRRE R0 R1 | COMPARE R{x} if equal R{x}                           |
+| 0X0010           | CMRRG [Register] [Register] | MOV R0 #1<br>MOV R1 #1<br>CMRRG R0 R1 | COMPARE R{x} if greater than R{x}                    |
+| 0X0011           | CMRRL [Register] [Register] | MOV R0 #1<br>MOV R1 #1<br>CMRRL R0 R1 | COMPARE R{x} if little than R{x}                     |
+| 0X0012           | CMASE [Register] [Stack]    | CMASE R0 S0                           | COMPARE ACC if equal than Stack                      |
+| 0X0013           | CMASG [Register] [Stack]    | CMASG R0 S0                           | COMPARE ACC if greater than Stack                    |
+| 0X0014           | CMASL [Register] [Stack]    | CMASL R0 S0                           | COMPARE ACC if little than Stack                     |
+| 0X0015           | CMRSE [Register] [Stack]    | CMRSE R0 S0                           | COMPARE R{x} if little than Stack                    |
+| 0X0016           | CMRSG [Register] [Stack]    | CMRSG R0 S0                           | COMPARE R{x} if greater than Stack                   |
+| 0X0017           | CMRSL [Register] [Stack]    | CMRSL R0 S0                           | COMPARE R{x} if little than Stack                    |
+| 0X0018           | INCA                        | INCA                                  | INCREASE ACC                                         |
+| 0X0019           | DECA                        | DECA                                  | DECREASE ACC                                         |
+| 0X001A           | INCR [Register]             | INCR R0                               | INCREASE Register{x}                                 |
+| 0X001B           | DECR [Register]             | DECR R0                               | DECREASE Register{x}                                 |
+| 0X001C           | ADDAR [Register]            | MOV R0 #1<br>ADDAR R0                 | ADD ACC and Register{x}                              |
+| 0X001D           | SUBAR [Register]            | MOV R0 #1<br>SUBAR R0                 | SUB ACC and Register{x}                              |
+| 0X001E           | INCS                        | INCS                                  | INCREASE Stack                                       |
+| 0X001F           | DECS                        | DECS                                  | DECREASE Stack                                       |
+| 0X0020           | ADDAS [Stack]               | ADDAS S0                              | ADD ACC and Stack                                    |
+| 0X0021           | SUBAS [Stack]               | SUBAS S0                              | SUB ACC and Stack                                    |
+| 0X0022           | ANDR [Register]             | MOV R0 #1<br>ANDR R0                  | ACC AND Register{x}                                  |
+| 0X0023           | AOR [Register]              | MOV R0 #1<br>AOR R0                   | ACC OR Register{x}                                   |
+| 0X0024           | AXR [Register]              | MOV R0 #1<br>AXR R0                   | ACC XOR Register{x}                                  |
+| 0X0025           | BSLR [Register]             | MOV R0 #1<br>BSLR R0                  | BIT Shift left in Register{x}                        |
+| 0X0026           | BSRR [Register]             | MOV R0 #1<br>BSRR R0                  | BIT Shift right in Register{x}                       |
+| 0X0027           | BSLLR [Register]            | MOV R0 #1<br>BSLLR R0                 | BIT Shift left loop in Register{x}                   |
+| 0X0028           | BSRLR [Register]            | MOV R0 #1<br>BSRLR R0                 | BIT Shift right loop in Register{x}                  |
+| 0X0029           | ANDS [Stack]                | ANDS S0                               | ACC AND Stack                                        |
+| 0X002A           | AOS [Stack]                 | AOS S0                                | ACC OR Stack                                         |
+| 0X002B           | AXS [Stack]                 | AXS S0                                | ACC XOR Stack                                        |
+| 0X002C           | BSLS [Stack]                | BSLS S0                               | BIT Shift left in Stack                              |
+| 0X002D           | BSRS [Stack]                | BSRS S0                               | BIT Shift right in Stack                             |
+| 0X002E           | BSLLS [Stack]               | BSLLS S0                              | BIT Shift left loop in Stack                         |
+| 0X002F           | BSRLS [Stack]               | BSRLS S0                              | BIT Shift right loop in Stack                        |
+| 0X0030           | IMA #[Hex]                  | IMA #1                                | Immediately value to ACC                             |
+| 0X0031           | IMR [Register] #[Hex]       | IMR R0 #1                             | Immediately value to Register                        |
+| 0X0032           | IMS [Stack] #[Hex]          | IMS S1 #1                             | Immediately value to Stack                           |
+| 0X0033           | GET [Register]              | GET R1                                | Get value from address                               |
+| 0X0034           | MVRR [Register] [Register]  | MVRR R0 R0                            | MOVE Register value to another Register{x}           |
+| 0X0035           | MVRS [Register] [Stack]     | MVRS R0 S0                            | MOVE Register value to Stack                         |
+| 0X0036           | MVSR [Register] [Register]  | MVRS S0 R0                            | MOVE Stack value to Register                         |
+| 0X0037           | MVAR [Register]             | MVAR R0                               | MOVE ACC value to Register                           |
+| 0X0038           | INTK                        | INTK                                  | Wait key interupt                                    |
+| 0X0039           | KEY                         | KEY                                   | Get key                                              |
+| 0X003A           | PLY [Register]              | MOV R0 #1<br>PLY R0                   | Play dididi sound                                    |
+| 0X003B           | PLYS [Register]             | MOV R0 #1<br>PLYS R0                  | Play a series of sound.Usually have a frequence      |
+| 0X003C           | GSET [Register]             | MOV R0 #1<br>GSET R0                  | Graphics resolution setting, [64X32 - 640X320]       |
+| 0X003D           | DPXY [Register]             | MOV R0 #1<br>DPXY R0                  | Draw 8 \* x pixels at (x, y)                         |
+| 0X003E           | SCRU                        | SCRU                                  | Screen scrool up x pixel                             |
+| 0X003F           | SCRD                        | SCRD                                  | Screen scrool down x pixel                           |
+| 0X0040           | SCRL                        | SCRL                                  | Screen scrool left x pixel                           |
+| 0X0041           | SCRR                        | SCRR                                  | Screen scrool right x pixel                          |
+| 0X0042           | DXY [Register]              | MOV R0 #1<br>DXY R0                   | Draw point at (x, y)                                 |
+| 0X0043           | DCXY [Register]             | MOV R0 #1<br>DCXY R0                  | Draw char at (x, y)                                  |
+| 0X0044           | CLS                         | CLS                                   | Clear screen                                         |
 
 ##### _Notice:_
 
 > All instruction return value is store in passtive side. Such `MOVSR {Rx}` means move stack value to register ,passtive side is register.But in `INCA` means ACC increase 1 and return value to ACC.
 
-## Instructions Set
+## Instruction Detail
 
 ### F0 : GOTO
 
@@ -194,6 +210,8 @@ END
 SUB2:
    ;;
 END
+
+STOP
 ```
 
 ## Program Example
@@ -216,6 +234,7 @@ DISPLAY:
     DCXY 40, 50, ACC ;; Display value in ACC
 END
 
+STOP
 ```
 
 ## VM Byte Code Specific
@@ -236,7 +255,9 @@ ovmcc hello_world.ovm
 ls
 # hello_world.ovm hello_world.ovmbc
 ```
+
 ## Debug Output
+
 ```shell
 ┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ F1 ┃ F2 ┃ F3 ┃ F4 ┃ F5 ┃ F6 ┃ F7 ┃ F8 ┃        START ADDRESS    ┃
@@ -256,6 +277,7 @@ ls
 ```
 
 ## Todo list
+
 - [x] Instructions Set Design
 - [ ] Project Structure Design
 - [ ] VM Core design
