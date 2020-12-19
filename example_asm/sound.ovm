@@ -1,0 +1,15 @@
+;;
+;; @Description: Dididi sound program
+;; @Author: wwhai
+;; @Mail: cnwwhai@gmail.com
+;; @Date: 2020-12-19
+START:
+    MAIN 0x00000000H
+END
+;; ----------------------------------------
+
+MAIN:
+      ;;
+END
+
+STOP
