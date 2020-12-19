@@ -7,9 +7,11 @@ START:
     MAIN 0x00000000H
 END
 ;; ----------------------------------------
-
 MAIN:
-      ;;
+    CALL PRINT
 END
-
+;;
+PRINT:
+    ;; print("helloworld")
+END
 STOP

@@ -1,0 +1,42 @@
+;;
+;; @Description: Branch program
+;; @Author: wwhai
+;; @Mail: cnwwhai@gmail.com
+;; @Date: 2020-12-19
+;; ----------------------------------------
+;; C code
+;; int add(int a, int b){
+;;      return a + b;
+;; }
+;; int no_return(){
+;;     //void
+;; }
+;; void main(int a, int b){
+;;     add(a, b);
+;; }
+START:
+    MAIN 0x00000000H
+END
+;; ----------------------------------------
+MAIN:
+    IMR R0 #1
+    IMR R1 #2
+    CALL NO_RETURN
+    CALL ADD
+    CALL PRINT
+END
+;;
+ADD:
+    ADDRR R0 R1 ;; Add r0 + r1 -> r0
+    BACK
+END
+;;
+NO_RETURN:
+    ;; void function
+END
+;;
+PRINT:
+    ;; Display R0
+END
+;;
+STOP

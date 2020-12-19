@@ -4,13 +4,32 @@
 ;; @Mail: cnwwhai@gmail.com
 ;; @Date: 2020-12-19
 ;; ----------------------------------------
+;; C code
+;; int a = 1;
+;; int b = 2;
+;; if(a > b){
+;;    printf("a>b\n");
+;; } else{
+;;    printf("a<b\n");
+;;}
+
 START:
     MAIN 0x00000000H
 END
 ;; ----------------------------------------
-
 MAIN:
-      ;;
+    IMR R0 #1
+    IMR R1 #2
+    CMRRE PRINT1
+    JMP PRINT2
 END
-
+;;
+PRINT1:
+    ;; Display "a>b"
+END
+;;
+PRINT2:
+    ;; Display "a<b"
+END
+;;
 STOP

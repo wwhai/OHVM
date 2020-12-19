@@ -3,13 +3,31 @@
 ;; @Author: wwhai
 ;; @Mail: cnwwhai@gmail.com
 ;; @Date: 2020-12-19
+;; C Code
+;; int sum = 0;
+;; for (int i = 1; i < 100; i++)
+;; {
+;;     sum += i;
+;; }
+
 START:
     MAIN 0x00000000H
 END
 ;; ----------------------------------------
-
 MAIN:
-      ;;
+    IMR R0 #1
+    IMR R1 #100
+    IMR ACC #0
+    CMRRE R0 R1
+    CALL SUM
+    CALL PRINT
 END
-
+;;
+SUM:
+    ADDAR R0 ;; ACC + R -> ACC
+    INCR R0  ;; R0 ++
+END
+PRINT:
+    ;; print -> 5050
+END
 STOP
