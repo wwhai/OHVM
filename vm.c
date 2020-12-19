@@ -14,15 +14,9 @@
 // Load Instructions
 void load_instrucsions(operate_function *operate_functions)
 {
+  // TODO: add more functions
   operate_functions[0x0000] = NOP;
   operate_functions[0x0001] = START;
-  operate_functions[0x0002] = STOP;
-  operate_functions[0x0003] = RSTR;
-  operate_functions[0x0004] = TIMER;
-  operate_functions[0x0005] = GOTO;
-  operate_functions[0x0006] = JNOC;
-  operate_functions[0x0007] = CALL;
-  operate_functions[0x0008] = BACK;
 }
 // Initial
 void init_vm(vm *vm)
@@ -38,8 +32,11 @@ void init_vm(vm *vm)
   // Load Instructions
   load_instrucsions(operate_functions);
 }
-
-// new vm
+/**
+ * @brief 
+ * 
+ * @return vm* 
+ */
 vm *new_vm()
 {
   vm *openvm = new_object(vm);
@@ -47,10 +44,10 @@ vm *new_vm()
   return openvm;
 };
 /**
+ * @brief 
  * 
- *  Core process
- * 
- * */
+ * @param vm 
+ */
 void run_bc(vm *vm)
 {
   while (true)
@@ -147,48 +144,44 @@ uint32 get_start_address(vm *vm)
 // set/get value to/from acc
 void set_acc(byte value, vm *vm)
 {
-  vm->ram[ACC] = value;
 }
 uint32 get_acc(vm *vm)
 {
-  return vm->ram[ACC];
+  return 0;
 }
 // set/get value to/from pc
 void set_pc(uint32 value, vm *vm)
 {
-  memcpy(&vm->ram[PC], &value, sizeof(uint32));
+  memcpy(&vm->ram[R_PC], &value, sizeof(uint32));
 }
 uint32 get_pc(vm *vm)
 {
   void *value = calloc(sizeof(byte), 4);
-  byte bytes[4] = {vm->ram[PC] + 0, vm->ram[PC] + 1, vm->ram[PC] + 2, vm->ram[PC] + 3};
+  byte bytes[4] = {vm->ram[R_PC] + 0, vm->ram[R_PC] + 1, vm->ram[R_PC] + 2, vm->ram[R_PC] + 3};
   memcpy(value, bytes, 1);
   return *((uint32 *)value);
 }
 // set/get value to/from sd
 void set_sd(byte value, vm *vm)
 {
-  vm->ram[SD] = value;
 }
 uint32 get_sd(vm *vm)
 {
-  return vm->ram[SD];
+  return 0;
 }
 // set/get value to/from sp
 void set_sp(byte value, vm *vm)
 {
-  vm->ram[SP] = value;
 }
 uint32 get_sp(vm *vm)
 {
-  return vm->ram[SP];
+  return 0;
 }
 // set/get value to/from ex
 void set_ex(byte value, vm *vm)
 {
-  vm->ram[EX] = value;
 }
 uint32 get_ex(vm *vm)
 {
-  return vm->ram[EX];
+  return 0;
 }

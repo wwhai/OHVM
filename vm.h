@@ -13,7 +13,7 @@
 #include "log.h"
 #include "types.h"
 // Max byte code size
-// Develop use 4kb
+// Develop use 4kb, Can configure other value
 #define MAX_RAM_SIZE 1024 * 4
 // Max stack deepth
 #define MAX_STACK_DEEPTH 1024
@@ -25,27 +25,23 @@
 #define INSTRUCTIONS_COUNT 0xFF
 /**
 * Special register address
+* @ readme.md section
 */
-// Null
-#define NULLPTR 0
-// ACC pointer 4byte 0x01 - 0x05
-#define ACC 1 //1
-// PC pointer 4byte 0x06 - 0x0A
-#define PC 1 + 4 // 5
-// Stack Deepth 0x0A - 0x0E
-#define SD 1 + 4 + 4 // 9
-// Stack pointer
-#define SP 1 + 4 + 4 + 4 // 13
-// Exception pointer
-#define EX 1 + 4 + 4 + 4 + 1 // 15
-
+#define R_NULL 0
+#define R_FLAG 1
+#define R_ADDR 3
+#define R_ACC 6
+#define R_PC 10
+#define R_SP 14
+#define R_SD 18
+#define R_EX 22
 /**
 * VM
 */
 typedef struct __attribute__((__packed__))
 {
-    // RAM
-    byte ram[MAX_RAM_SIZE];
+    // Null Pointer
+    byte nptr;
     // user programe start address
     uint32 start_address;
     // Bytecode size
@@ -60,29 +56,30 @@ typedef struct __attribute__((__packed__))
     uint32 sd;
     // stack pointer
     uint32 sp;
-    // exception
+    // exception register
     uint32 ex;
+    // RAM
+    byte ram[MAX_RAM_SIZE];
     // stack register
     uint32 stack[MAX_STACK_DEEPTH];
     // general register
     uint32 r[MAX_REGISTER_COUNT];
     // Flags: |0|0|0|0|0|0|0|0|
-    struct __attribute__((__packed__))
+    struct
     {
-        // Maybe have some flag
-        bool f1 : true;
-        bool f2 : true;
-        bool f3 : true;
-        bool f4 : true;
-        bool f5 : true;
-        bool f6 : true;
-        bool f7 : true;
-        bool f8 : true;
+        int ze : 1;
+        int eq : 1;
+        int excpt : 1;
+        int f4 : 1;
+        int f5 : 1;
+        int f6 : 1;
+        int f7 : 1;
+        int f8 : 1;
     } flag;
 } vm;
-// operate_function
+// operate function define
 typedef void (*operate_function)(vm *vm);
-//
+// operate function mapping
 operate_function operate_functions[INSTRUCTIONS_COUNT];
 // new vm
 vm *new_vm();
@@ -94,9 +91,8 @@ void load_instrucsions(operate_function *operate_functions);
 void load_vmbc(char *path, vm *vm);
 // run byte code
 void run_bc(vm *vm);
-// set value to ram
+// set/get value to ram
 void set_ram(uint32 offset, byte value, vm *vm);
-// get value from ram
 byte get_ram(uint32 offset, vm *vm);
 // reset
 void reset_ram(vm *vm);

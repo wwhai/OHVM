@@ -43,16 +43,18 @@ END
 
 Those address can't be accessed by user program.
 
-| Name                 | Symbol    | Size       | Address   |
-| -------------------- | --------- | ---------- | --------- |
-| Addressing Register  | A         | 4byte      | 1         |
-| ACCumulator          | ACC       | 4byte      | 2         |
-| Program counter      | PC        | 4byte      | 3         |
-| Stack index pointer  | SP        | 4byte      | 4         |
-| Stack deepth pointer | SD        | 4byte      | 5         |
-| Exception Register   | EX        | 4byte      | 6         |
-| General Register     | R{0...31} | 4byte(per) | 7-38 x 4  |
-| Stack Register       | S{0...7}  | 4byte(per) | 39-47 x 8 |
+| Name                 | Symbol    | Size       | Address(Decimal) |
+| -------------------- | --------- | ---------- | ---------------- |
+| NullPtr Register     | NULL      | 1byte      | ROM: 0 - 1       |
+| VM Flag Register     | FLAG      | 1byte      | ROM: 1 - 2       |
+| Addressing Register  | A         | 4byte      | ROM: 3 - 5       |
+| ACCumulator          | ACC       | 4byte      | ROM: 6 - 9       |
+| Program counter      | PC        | 4byte      | ROM: 10 - 13     |
+| Stack index pointer  | SP        | 4byte      | ROM: 14 - 17     |
+| Stack deepth pointer | SD        | 4byte      | ROM: 18 - 21     |
+| Exception Register   | EXCPT     | 4byte      | ROM: 22 - 25     |
+| General Register     | R{0...31} | 4byte(per) | ROM: 25 - 152    |
+| Stack Register       | S{0...7}  | 4byte(per) | ROM: 153 - 378   |
 
 ### Flags
 
