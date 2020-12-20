@@ -12,9 +12,10 @@
 #include <stdlib.h>
 #include "log.h"
 #include "types.h"
-// Max byte code size
-// Develop use 4kb, Can configure other value
+// Max byte code size, Develop use 4kb, Can configure other value
+#ifndef MAX_RAM_SIZE
 #define MAX_RAM_SIZE 1024 * 4
+#endif
 // Max stack deepth
 #define MAX_STACK_DEEPTH 1024
 // Max register count
@@ -27,13 +28,21 @@
 * Special register address
 * @ readme.md section
 */
+// Nullptr
 #define R_NULL 0
+// Flag
 #define R_FLAG 1
+// Addr register
 #define R_ADDR 3
+// ACC
 #define R_ACC 6
+// PC
 #define R_PC 10
+// SP
 #define R_SP 14
+// SD
 #define R_SD 18
+// Exception
 #define R_EX 22
 /**
 * VM
@@ -67,9 +76,9 @@ typedef struct __attribute__((__packed__))
     // Flags: |0|0|0|0|0|0|0|0|
     struct
     {
-        int ze : 1;
-        int eq : 1;
-        int excpt : 1;
+        int fze : 1;
+        int feq : 1;
+        int fex : 1;
         int f4 : 1;
         int f5 : 1;
         int f6 : 1;
@@ -77,16 +86,11 @@ typedef struct __attribute__((__packed__))
         int f8 : 1;
     } flag;
 } vm;
-// operate function define
-typedef void (*operate_function)(vm *vm);
-// operate function mapping
-operate_function operate_functions[INSTRUCTIONS_COUNT];
+
 // new vm
 vm *new_vm();
 // Initial
 void init_vm(vm *vm);
-// Load
-void load_instrucsions(operate_function *operate_functions);
 // load byte code
 void load_vmbc(char *path, vm *vm);
 // run byte code

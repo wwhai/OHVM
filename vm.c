@@ -11,13 +11,7 @@
 #include "cpu.h"
 #include "execute_function.h"
 #include <string.h>
-// Load Instructions
-void load_instrucsions(operate_function *operate_functions)
-{
-  // TODO: add more functions
-  operate_functions[0x0000] = NOP;
-  operate_functions[0x0001] = START;
-}
+
 // Initial
 void init_vm(vm *vm)
 {
