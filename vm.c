@@ -50,10 +50,10 @@ vm *new_vm()
  */
 void run_bc(vm *vm)
 {
-  while (true)
-  {
-    execute(vm);
-  }
+  // while (true)
+  // {
+  //   execute(vm);
+  // }
 }
 // Load bytecode
 void load_vmbc(char *path, vm *vm)

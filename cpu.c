@@ -25,6 +25,6 @@ byte get_instruction(vm *vm)
 // return pc next offset bytes
 int execute(vm *vm)
 {
-    operate_functions[get_instruction(vm)](vm);
+    //operate_functions[get_instruction(vm)](vm);
     return 0;
 }

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "SDL2/SDL.h"
 /**
  * @brief 
  * 
@@ -29,7 +30,7 @@ void print_vm_state()
  */
 void p()
 {
-    for (int i = 0; i < 256; i++)
+    for (int i = 0x3c; i < 0x47; i++)
     {
         printf("0X%08XH\n", i);
     }
@@ -54,11 +55,19 @@ int compile_bc(unsigned char *bc, int length)
     fclose(file);
     return 0;
 }
+int sdl_demo()
+{
+    //声明表面
+    SDL_Surface *hello = NULL;
+    SDL_Surface *screen = NULL;
+    return 0;
+}
 
 // rm -rf ./test_nop.ovmbc && gcc test.c -o test && ./test && rm -rf test && xxd test_nop.ovmbc
 int main(int argc, char const *argv[])
 {
     unsigned char bc[] = {0x0000, 0x0001};
-    compile_bc(bc, sizeof(bc));
+    // compile_bc(bc, sizeof(bc));
+    p();
     return 0;
 }

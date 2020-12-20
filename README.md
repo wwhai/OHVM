@@ -140,46 +140,20 @@ Those address can't be accessed by user program.
 | 0X003A           | PLY [Register]              | MOV R0 #1<br>PLY R0                   | Play dididi sound                                    |
 | 0X003B           | PLYS [Register]             | MOV R0 #1<br>PLYS R0                  | Play a series of sound.Usually have a frequence      |
 | 0X003C           | GSET [Register]             | MOV R0 #1<br>GSET R0                  | Graphics resolution setting, [64X32 - 640X320]       |
-| 0X003D           | DPXY [Register]             | MOV R0 #1<br>DPXY R0                  | Draw 8 \* x pixels at (x, y)                         |
-| 0X003E           | SCRU                        | SCRU                                  | Screen scrool up x pixel                             |
-| 0X003F           | SCRD                        | SCRD                                  | Screen scrool down x pixel                           |
-| 0X0040           | SCRL                        | SCRL                                  | Screen scrool left x pixel                           |
-| 0X0041           | SCRR                        | SCRR                                  | Screen scrool right x pixel                          |
-| 0X0042           | DXY [Register]              | MOV R0 #1<br>DXY R0                   | Draw point at (x, y)                                 |
-| 0X0043           | DCXY [Register]             | MOV R0 #1<br>DCXY R0                  | Draw char at (x, y)                                  |
-| 0X0044           | CLS                         | CLS                                   | Clear screen                                         |
+| 0X003D           | CLS                         | CLS                                   | Clear screen                                         |
+| 0X003E           | DPXY [Register]             | MOV R0 #1<br>DPXY R0                  | Draw 8 \* x pixels at (x, y)                         |
+| 0X003F           | DXY [Register]              | MOV R0 #1<br>DXY R0                   | Draw point at (x, y)                                 |
+| 0X0040           | DCXY [Register]             | MOV R0 #1<br>DCXY R0                  | Draw char at (x, y)                                  |
+| 0X0041           | DLINE [Register]            | MOV R0 #1<br>DCXY R0                  | Draw line                                            |
+| 0X0042           | DRECT [Register]            | MOV R0 #1<br>DCXY R0                  | Draw rectangle                                       |
+| 0X0043           | SCRU                        | SCRU                                  | Screen scrool up x pixel                             |
+| 0X0044           | SCRD                        | SCRD                                  | Screen scrool down x pixel                           |
+| 0X0045           | SCRL                        | SCRL                                  | Screen scrool left x pixel                           |
+| 0X0046           | SCRR                        | SCRR                                  | Screen scrool right x pixel                          |
 
 ##### _Notice:_
 
 > All instruction return value is store in passtive side. Such `MOVSR {Rx}` means move stack value to register ,passtive side is register.But in `INCA` means ACC increase 1 and return value to ACC.
-
-## Instruction Detail
-
-### F0 : GOTO
-
-#### Define
-
-| Instruction Code | Function Code | Symbol | Size | Description |
-| ---------------- | ------------- | ------ | ---- | ----------- |
-| F                | 0             | GOTO   | 4    | description |
-
-#### Example
-
-- HEX:
-
-  ```assembly
-  F00xFFFF
-  ```
-
-- ASM:
-
-  ```assembly
-  GOTO 0xFFF
-  ```
-
-##### _Notice:_
-
-> some notice....
 
 ## VM Program Specific
 
@@ -238,6 +212,20 @@ END
 
 STOP
 ```
+
+## Exception
+
+Can use `TRY ... CATCH` expression to catch exceptions.
+
+```
+TRY
+    ;; ....
+    ;; ....
+    ;; ....
+CATCH ${Address}
+```
+
+When exception catched, the `EX` flag be seted and `EXCPT` register be seted exception code.
 
 ## VM Byte Code Specific
 
