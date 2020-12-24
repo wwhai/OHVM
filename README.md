@@ -18,7 +18,7 @@
 
 ### Basic Structure
 
-The open vm is a virtual CPU simulator,It contains RAM,CPU,External Interface,like picture at bellow:
+The open ohvm is a virtual CPU simulator,It contains RAM,CPU,External Interface,like picture at bellow:
 
 ![](res/model.png)
 
@@ -80,8 +80,8 @@ Those address can't be accessed by user program.
 | Instruction Code | Symbol                      | Example                               | Function                                             |
 | ---------------- | --------------------------- | ------------------------------------- | ---------------------------------------------------- |
 | 0X0000           | NOP                         | NOP                                   | No operation, used for delay                         |
-| 0X0001           | START                       | START                                 | Start vm                                             |
-| 0X0002           | STOP                        | STOP                                  | Stop vm                                              |
+| 0X0001           | START                       | START                                 | Start ohvm                                             |
+| 0X0002           | STOP                        | STOP                                  | Stop ohvm                                              |
 | 0X0003           | RSTR                        | RSTR                                  | Reset all Register                                   |
 | 0X0004           | TIMER [Register]            | MOVR R0 #5<br>TIMER R0                | Start Timer                                          |
 | 0X0005           | GOTO [Register]/[Label]     | GOTO LOOP<br>GOTO R0                  | GOTO ADDress                                         |
@@ -159,10 +159,10 @@ Those address can't be accessed by user program.
 
 ### Reserved Keywords
 
-- **_START_**: used for start vm
+- **_START_**: used for start ohvm
 - **_MAIN_**: main like c
 - **_END_**: sub process end label
-- **_STOP_**: stop vm
+- **_STOP_**: stop ohvm
 
 ##### _Notice:_
 
@@ -240,10 +240,10 @@ Byte Code header contains 4byte file type,and 3byte version,4byte address:
 ### How to use
 
 ```shell
-# ovmcc file
-ovmcc hello_world.ovm
+# oohvmcc file
+oohvmcc hello_world.oohvm
 ls
-# hello_world.ovm hello_world.ovmbc
+# hello_world.oohvm hello_world.oohvmbc
 ```
 
 ## Debug Output

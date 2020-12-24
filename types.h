@@ -9,7 +9,7 @@
 #define types_h
 
 #include <stdio.h>
-#include "log.h"
+#include "clog.h"
 // Object size
 #define object_size(O, T) sizeof(O) / sizeof(T)
 #define type_size(O) sizeof(O)
@@ -32,6 +32,6 @@ typedef struct __attribute__((__packed__))
     byte v_main, v_progress, v_bugfix;
     // 0000H
     uint32 start_address;
-} ovmbc;
-void ovmbc_output(ovmbc *bc);
+} ohvmbc;
+void ohvmbc_output(ohvmbc *bc);
 #endif

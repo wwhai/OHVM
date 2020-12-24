@@ -6,9 +6,8 @@
 //
 
 #include "types.h"
-void ovmbc_output(ovmbc *bc)
+void ohvmbc_output(ohvmbc *bc)
 {
-    log_debug("File type:%s", bc->type);
-    log_debug("Version:%d-%d-%d", bc->v_main, bc->v_progress, bc->v_bugfix);
-    log_debug("Start at:0x%016xH", bc->start_address);
+    log_debug("File type:%s Version:%d-%d-%d Start at:0x%016xH",
+              bc->type, bc->v_main, bc->v_progress, bc->v_bugfix, bc->start_address);
 }

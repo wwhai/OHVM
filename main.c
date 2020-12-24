@@ -1,3 +1,4 @@
+
 //
 //  main.c
 //  OpenVM
@@ -6,13 +7,15 @@
 //
 
 #include <stdio.h>
-#include "vm.h"
-int main(int argc, char *argv[])
-{
-    char *file = "/Users/wangwenhai/github/OpenVM/res/test_nop.ovmbc";
-    log_set_level(LOG_DEBUG);
-    vm *openvm = new_vm();
-    load_vmbc(file, openvm);
-    run_bc(openvm);
-    return 0;
+#include "ohvm.h"
+#include <stdlib.h>
+#include <string.h>
+#include "main.h"
+int main(int argc, char *argv[]) {
+  char *file = "/Users/wangwenhai/github/OpenVM/res/add_r0_r1_test.ovmbc";
+  log_set_level(LOG_DEBUG);
+  ohvm *openohvm = new_ohvm();
+  load_ohvmbc(file, openohvm);
+  run_bc(openohvm);
+  return 0;
 }

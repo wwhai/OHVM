@@ -32,10 +32,10 @@
 *.app
 launch*
 main.ds*
-openvm.dS*
+openohvm.dS*
 tasks.dS*
 main
-openvm
+openohvm
 tasks
 rebar.lock
 debug/**

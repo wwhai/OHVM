@@ -1,10 +1,8 @@
 //
 //  utils.c
-//  OpenVM
+//  OHVM
 //
-//  Created by wwhai on 2020/11/25.
+//  Created by 王文海 on 2020/12/22.
 //
 
 #include "utils.h"
-#include "types.h"
-//
