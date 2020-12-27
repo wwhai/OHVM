@@ -1,3 +1,4 @@
+
 //
 //  ohvm.c
 //  OpenVM
@@ -8,6 +9,7 @@
 #include "ohvm.h"
 #include "types.h"
 #include <string.h>
+#include <unistd.h>
 // operate function mapping
 operate_function operate_functions[INSTRUCTIONS_COUNT];
 // Initial
@@ -22,6 +24,12 @@ void init_ohvm(ohvm *vm) {
   vm->acc = 0;
   //
   vm->a = 0;
+  //
+  vm->sbp = 0;
+  //
+  vm->sd = 0;
+  //
+  vm->sp = 0;
 }
 /**
  *
@@ -38,8 +46,7 @@ ohvm *new_ohvm() {
   //
   return openohvm;
 };
-/**
- */
+//
 void run_bc(ohvm *vm) {
   while (1) {
     execute(vm);
@@ -106,12 +113,32 @@ uint32 get_ram_value(uint32 offset, ohvm *vm) {
   if (offset > 4) {
     return 0;
   }
-  byte *value = (byte *)calloc(sizeof(byte), offset);
-  for (uint32 i = 0; i < offset; i++) {
-    log_debug("RAM[%d] = %d", vm->pc + i, vm->ram[vm->pc + i]);
-    memcpy(value + i, &vm->ram[vm->pc + (offset - 1 - i)], 1);
+  if (offset == 1) {
+    return (uint32)vm->ram[vm->pc];
   }
-  return *value;
+  if (offset == 4) {
+    union {
+      byte bv[4];
+      uint32 iv;
+    } v, tv;
+    tv.bv[0] = 1;
+    if (tv.iv == 1) {
+      // big
+      for (uint32 i = 0; i < offset; i++) {
+        v.bv[i] = vm->ram[vm->pc + i];
+        log_debug("RAM[%d] = %d", vm->pc + i, vm->ram[vm->pc + i]);
+      }
+    } else {
+      // little
+      for (uint32 i = 0; i < offset; i++) {
+        v.bv[offset - 1 - i] = vm->ram[vm->pc + i];
+        log_debug("RAM[%d] = %d", vm->pc + i, vm->ram[vm->pc + i]);
+      }
+    }
+
+    return v.iv;
+  }
+  return 0;
 }
 
 // set start address
@@ -125,23 +152,28 @@ uint32 get_acc_value(ohvm *vm) { return vm->acc; }
 void set_pc_value(uint32 value, ohvm *vm) { vm->pc = value; }
 uint32 get_pc_value(ohvm *vm) { return vm->pc; }
 // set/get value to/from sd
-void set_sd(byte value, ohvm *vm) {}
-uint32 get_sd(ohvm *vm) { return 0; }
+void set_sd(byte value, ohvm *vm) { vm->sd = value; }
+uint32 get_sd(ohvm *vm) { return vm->sd; }
 // set/get value to/from sp
-void set_sp(byte value, ohvm *vm) {}
-uint32 get_sp(ohvm *vm) { return 0; }
+void set_sp(byte value, ohvm *vm) { vm->sp = value; }
+uint32 get_sp(ohvm *vm) { return vm->sp; }
 // set/get value to/from ex
-void set_ex(byte value, ohvm *vm) {}
-uint32 get_ex(ohvm *vm) { return 0; }
+void set_ex(byte value, ohvm *vm) { vm->ex = value; }
+uint32 get_ex(ohvm *vm) { return vm->ex; }
 //
 void set_r_value(int rn, uint32 value, ohvm *vm) {
   log_debug("SET R[%d] %d", rn, value);
-  vm->r[rn] = value;
+  uint32 sd = vm->sd;
+  stack stack = vm->stack[sd];
+  stack.r[rn] = value;
 }
-uint32 get_r_value(int rn, ohvm *vm) { return vm->r[rn]; }
-/////////////////////          ///////////////////////////////         /////////////////////////              ////////////////////////////////
-/////////////////////          ///////////////////////////////         /////////////////////////              ////////////////////////////////
-/////////////////////          ///////////////////////////////         /////////////////////////              ////////////////////////////////
+uint32 get_r_value(int rn, ohvm *vm) {
+  uint32 sd = vm->sd;
+  stack stack = vm->stack[sd];
+  return stack.r[rn];
+}
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 void NOP_0X0000(ohvm *vm) {
   log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
@@ -164,8 +196,25 @@ void RSTR_0X0003(ohvm *vm) {
 
   set_pc_value(vm->pc + 1, vm);
 }
-void TIMER_0X0004(ohvm *vm) {}
-void GOTO_0X0005(ohvm *vm) {}
+// SLEEP ms
+void TIMER_0X0004(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+  set_pc_value(vm->pc + 1, vm);
+  uint32 value = get_ram_value(4, vm);
+  sleep(value);
+  set_pc_value(vm->pc + 4, vm);
+}
+// GOTO
+void GOTO_0X0005(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+  set_pc_value(vm->pc + 1, vm);
+  uint32 address = get_ram_value(4, vm);
+  vm->pc = address;
+}
+// 1 PUSH Stack
+// 2 save Rn
+// BACK : return value
+// NO BACK : void
 void CALL_0X0006(ohvm *vm) {}
 void BACK_0X0007(ohvm *vm) {}
 void JMP_0X0008(ohvm *vm) {}
@@ -184,14 +233,49 @@ void CMASL_0X0014(ohvm *vm) {}
 void CMRSE_0X0015(ohvm *vm) {}
 void CMRSG_0X0016(ohvm *vm) {}
 void CMRSL_0X0017(ohvm *vm) {}
-void INCA_0X0018(ohvm *vm) {}
-void DECA_0X0019(ohvm *vm) {}
-void INCR_0X001A(ohvm *vm) {}
-void DECR_0X001B(ohvm *vm) {}
-void ADDAR_0X001C(ohvm *vm) {
+// Acc = Acc + 1
+void INCA_0X0018(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+  set_acc_value(vm->acc + 1, vm);
+}
+// Acc = Acc- 1
+void DECA_0X0019(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+  set_acc_value(vm->acc - 1, vm);
+}
+// Rn = Rn + 1
+void INCR_0X001A(ohvm *vm) {
   log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
 
-  set_pc_value(vm->pc + 2, vm);
+  set_pc_value(vm->pc + 1, vm);
+  uint32 rn = get_ram_value(1, vm);
+  // Rn ++
+  uint32 sd = vm->sd;
+  stack stack = vm->stack[sd];
+  set_r_value(rn, stack.r[rn] + 1, vm);
+  set_pc_value(vm->pc + 1, vm);
+}
+// Rn = Rn -1
+void DECR_0X001B(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+
+  set_pc_value(vm->pc + 1, vm);
+  uint32 rn = get_ram_value(1, vm);
+  // Rn --
+  uint32 sd = vm->sd;
+  stack stack = vm->stack[sd];
+  set_r_value(rn, stack.r[rn] - 1, vm);
+  set_pc_value(vm->pc + 1, vm);
+}
+// ADDAR Rn
+void ADDAR_0X001C(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+  set_pc_value(vm->pc + 1, vm);
+  uint32 rn = get_ram_value(1, vm);
+  uint32 sd = vm->sd;
+  stack stack = vm->stack[sd];
+  set_acc_value(vm->acc + stack.r[rn], vm);
+  set_pc_value(vm->pc + 1, vm);
 }
 void SUBAR_0X001D(ohvm *vm) {}
 void INCS_0X001E(ohvm *vm) {}
@@ -212,7 +296,15 @@ void BSLS_0X002C(ohvm *vm) {}
 void BSRS_0X002D(ohvm *vm) {}
 void BSLLS_0X002E(ohvm *vm) {}
 void BSRLS_0X002F(ohvm *vm) {}
-void IMA_0X0030(ohvm *vm) {}
+// IMA {value}
+void IMA_0X0030(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+  set_pc_value(vm->pc + 1, vm);
+  uint32 value = get_ram_value(4, vm);
+  set_acc_value(vm->acc + value, vm);
+  set_pc_value(vm->pc + 4, vm);
+}
+// IMR {value}
 void IMR_0X0031(ohvm *vm) {
   log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
   // PC +1 -> Rn
@@ -226,8 +318,18 @@ void IMR_0X0031(ohvm *vm) {
   // Next
   set_pc_value(vm->pc + 4, vm);
 }
+//
 void IMS_0X0032(ohvm *vm) {}
-void GET_0X0033(ohvm *vm) {}
+// GET {address} -> ACC
+void GET_0X0033(ohvm *vm) {
+  log_debug("CURRENT EXECUTE FUNCTION:%s", __FUNCTION__);
+  set_pc_value(vm->pc + 1, vm);
+  uint32 rn = get_ram_value(1, vm);
+  uint32 sd = vm->sd;
+  stack stack = vm->stack[sd];
+  set_acc_value(vm->acc + stack.r[rn], vm);
+  set_pc_value(vm->pc + 1, vm);
+}
 void MVRR_0X0034(ohvm *vm) {}
 void MVRS_0X0035(ohvm *vm) {}
 void MVSR_0X0036(ohvm *vm) {}

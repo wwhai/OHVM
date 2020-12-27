@@ -39,3 +39,4 @@ openohvm
 tasks
 rebar.lock
 debug/**
+.DS*

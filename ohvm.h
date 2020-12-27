@@ -25,47 +25,46 @@
 #define INTERNAL_ADDRESS_SIZE 1024
 // INSTRUCTIONS_COUNT: 256
 #define INSTRUCTIONS_COUNT 0xFF
+typedef struct { uint32 r[MAX_REGISTER_COUNT]; } stack;
 /**
 * VM
 */
-typedef struct __attribute__((__packed__))
-{
-    // Null Pointer
-    byte nptr;
-    // user programe start address
-    uint32 start_address;
-    // Bytecode size
-    uint32 bc_size;
-    // address pointer
-    uint32 a;
-    // acc
-    uint32 acc;
-    // pc
-    uint32 pc;
-    // stack deepth
-    uint32 sd;
-    // stack pointer
-    uint32 sp;
-    // exception register
-    uint32 ex;
-    // RAM
-    byte ram[MAX_RAM_SIZE];
-    // stack register
-    uint32 stack[MAX_STACK_DEEPTH];
-    // general register
-    uint32 r[MAX_REGISTER_COUNT];
-    // Flags: |0|0|0|0|0|0|0|0|
-    struct
-    {
-        int fze : 1;
-        int feq : 1;
-        int fex : 1;
-        int f4 : 1;
-        int f5 : 1;
-        int f6 : 1;
-        int f7 : 1;
-        int f8 : 1;
-    } flag;
+typedef struct __attribute__((__packed__)) {
+  // user programe start address
+  uint32 start_address;
+  // Bytecode size
+  uint32 bc_size;
+  // address pointer
+  uint32 a;
+  // acc
+  uint32 acc;
+  // pc
+  uint32 pc;
+  // stack deepth
+  uint32 sd;
+  // stack pointer
+  uint32 sp;
+  // stack base pointer
+  uint32 sbp;
+  // exception register
+  uint32 ex;
+  // RAM
+  byte ram[MAX_RAM_SIZE];
+  // stack 1024 * 8
+  stack stack[MAX_STACK_DEEPTH];
+  //    // general register
+  //    uint32 r[MAX_REGISTER_COUNT];
+  // Flags: |0|0|0|0|0|0|0|0|
+  struct {
+    int fze : 1;
+    int feq : 1;
+    int fex : 1;
+    int f4 : 1;
+    int f5 : 1;
+    int f6 : 1;
+    int f7 : 1;
+    int f8 : 1;
+  } flag;
 } ohvm;
 // operate function define
 typedef void (*operate_function)(ohvm *vm);
