@@ -18,44 +18,22 @@
 #define MAX_RAM_SIZE 1024 * 4
 #endif
 // Max stack deepth
-#define MAX_STACK_DEEPTH 1024
+#define MAX_STACK_DEEPTH 16
 // Max register count
-#define MAX_REGISTER_COUNT 64
+#define MAX_REGISTER_COUNT 8
 // Internal address
 #define INTERNAL_ADDRESS_SIZE 1024
 // INSTRUCTIONS_COUNT: 256
 #define INSTRUCTIONS_COUNT 0xFF
-typedef struct { uint32 r[MAX_REGISTER_COUNT]; } stack;
-/**
-* VM
-*/
-typedef struct __attribute__((__packed__)) {
-  // user programe start address
-  uint32 start_address;
-  // Bytecode size
-  uint32 bc_size;
-  // address pointer
-  uint32 a;
-  // acc
-  uint32 acc;
-  // pc
+typedef struct __attribute__((__packed__))
+{
+  uint32 r[MAX_REGISTER_COUNT];
   uint32 pc;
-  // stack deepth
-  uint32 sd;
-  // stack pointer
-  uint32 sp;
-  // stack base pointer
-  uint32 sbp;
-  // exception register
+  uint32 acc;
   uint32 ex;
-  // RAM
-  byte ram[MAX_RAM_SIZE];
-  // stack 1024 * 8
-  stack stack[MAX_STACK_DEEPTH];
-  //    // general register
-  //    uint32 r[MAX_REGISTER_COUNT];
   // Flags: |0|0|0|0|0|0|0|0|
-  struct {
+  struct
+  {
     int fze : 1;
     int feq : 1;
     int fex : 1;
@@ -65,10 +43,27 @@ typedef struct __attribute__((__packed__)) {
     int f7 : 1;
     int f8 : 1;
   } flag;
+} stack;
+/**
+* VM
+*/
+typedef struct __attribute__((__packed__))
+{
+  // Bytecode size
+  uint32 bc_size;
+  // stack deepth
+  uint32 sd;
+  // stack pointer
+  uint32 sp;
+  // stack base pointer
+  uint32 sbp;
+  // RAM
+  byte ram[MAX_RAM_SIZE];
+  // stack 1024 * 8
+  stack stack[MAX_STACK_DEEPTH];
 } ohvm;
 // operate function define
 typedef void (*operate_function)(ohvm *vm);
-
 // new ohvm
 ohvm *new_ohvm(void);
 // Initial
@@ -82,12 +77,6 @@ void set_ram_value(uint32 offset, byte value, ohvm *vm);
 uint32 get_ram_value(uint32 offset, ohvm *vm);
 // reset
 void reset_ram(ohvm *vm);
-// set start address
-void set_start_address(uint32 value, ohvm *vm);
-uint32 get_start_address(ohvm *vm);
-// set/get an address to/from address register
-void set_a(uint32 value, ohvm *vm);
-uint32 get_a(ohvm *vm);
 // set/get value to/from acc
 void set_acc_value(uint32 value, ohvm *vm);
 uint32 get_acc_value(ohvm *vm);

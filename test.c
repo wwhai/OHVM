@@ -1,44 +1,79 @@
 #include <stdio.h>
-
-/**
- * @brief 
- * 
- * 
- * 
+#include <SDL2/SDL.h>
+/*
+ * Lesson 1: Hello World!
  */
-void print_ohvm_state()
+int main(int argc, char **argv)
 {
-    printf("┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
-    printf("┃ F1 ┃ F2 ┃ F3 ┃ F4 ┃ F5 ┃ F6 ┃ F7 ┃ F8 ┃        START ADDRESS    ┃\n");
-    printf("┃━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━┃\n");
-    printf("┃ %-2d ┃ %-2d ┃ %-2d ┃ %-2d ┃ %-2d ┃ %-2d ┃ %-2d ┃ %-2d ┃   0X%016xH   ┃\n", 0, 0, 0, 0, 0, 0, 0, 0, 0);
-    printf("┣━━━━┻━━━━╋━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━┫\n");
-    printf("┃ PC      ┃     0X%016xH        ┃  %-8s            ┃\n", 0, "NOP");
-    printf("┃━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃\n");
-    printf("┃ ACC     ┃                   0X%016xH                 ┃\n", 0);
-    printf("┃━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃\n");
-    printf("┃ SD      ┃                   0X%016xH                 ┃\n", 0);
-    printf("┃━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃\n");
-    printf("┃ SP      ┃                   0X%016xH                 ┃\n", 0);
-    printf("┃━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃\n");
-    printf("┃ EX      ┃                   0X%016xH                 ┃\n", 0);
-    printf("┗━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n");
-}
-/**
- * @brief 
- * 
- */
-void p()
-{
-    for (int i = 0x3c; i < 0x47; i++)
+    //First we need to start up SDL, and make sure it went ok
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        printf("0X%08XH\n", i);
+        return 1;
     }
-}
 
-// rm -rf ./test_nop.oohvmbc && gcc test.c -o test && ./test && rm -rf test && xxd test_nop.oohvmbc
-int main(int argc, char const *argv[])
-{
-    
+    //Now create a window with title "Hello World" at 100, 100 on the screen with w:640 h:480 and show it
+    SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    //Make sure creating our window went ok
+    if (win == NULL)
+    {
+        return 1;
+    }
+
+    //Create a renderer that will draw to the window, -1 specifies that we want to load whichever
+    //video driver supports the flags we're passing
+    //Flags: SDL_RENDERER_ACCELERATED: We want to use hardware accelerated rendering
+    //SDL_RENDERER_PRESENTVSYNC: We want the renderer's present function (update screen) to be
+    //synchronized with the monitor's refresh rate
+    SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (ren == NULL)
+    {
+        SDL_DestroyWindow(win);
+        SDL_Quit();
+        return 1;
+    }
+
+    //SDL 2.0 now uses textures to draw things but SDL_LoadBMP returns a surface
+    //this lets us choose when to upload or remove textures from the GPU
+    SDL_Surface *bmp = SDL_LoadBMP("/Users/wangwenhai/github/OpenVM/res/test.bmp");
+    if (bmp == NULL)
+    {
+        SDL_DestroyRenderer(ren);
+        SDL_DestroyWindow(win);
+        SDL_Quit();
+        return 1;
+    }
+
+    //To use a hardware accelerated texture for rendering we can create one from
+    //the surface we loaded
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
+    //We no longer need the surface
+    SDL_FreeSurface(bmp);
+    if (tex == NULL)
+    {
+        SDL_DestroyRenderer(ren);
+        SDL_DestroyWindow(win);
+        SDL_Quit();
+        return 1;
+    }
+
+    //A sleepy rendering loop, wait for 3 seconds and render and present the screen each time
+    for (int i = 0; i < 3; ++i)
+    {
+        //First clear the renderer
+        SDL_RenderClear(ren);
+        //Draw the texture
+        SDL_RenderCopy(ren, tex, NULL, NULL);
+        //Update the screen
+        SDL_RenderPresent(ren);
+        //Take a quick break after all that hard work
+        SDL_Delay(1000);
+    }
+
+    //Clean up our objects and quit
+    SDL_DestroyTexture(tex);
+    SDL_DestroyRenderer(ren);
+    SDL_DestroyWindow(win);
+    SDL_Quit();
+
     return 0;
 }
