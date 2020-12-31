@@ -11,7 +11,7 @@
 #include <string.h>
 #include "main.h"
 int main(int argc, char *argv[]) {
-  char *file = "/Users/wangwenhai/github/OpenVM/res/add_r0_r1_test.ovmbc";
+  char *file = "/Users/wangwenhai/github/OpenVM/res/call_test.ohvmbc";
   log_set_level(LOG_DEBUG);
   ohvm *openohvm = new_ohvm();
   load_ohvmbc(file, openohvm);

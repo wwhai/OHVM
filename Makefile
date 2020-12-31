@@ -6,4 +6,4 @@ ohvm : ${objects}
 
 .PHONY : clean
 clean :
-	-rm ohvm ${objects}
+	-rm ohvm ${objects} *.ohvmbc
