@@ -30,13 +30,7 @@
 *.exe
 *.out
 *.app
-launch*
-main.ds*
-openohvm.dS*
-tasks.dS*
+#
 main
-openohvm
-tasks
-rebar.lock
-debug/**
-.DS*
+ohvm
+ohvmcc

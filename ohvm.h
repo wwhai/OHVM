@@ -171,5 +171,6 @@ void SCRU_0X43(ohvm *vm);
 void SCRD_0X44(ohvm *vm);
 void SCRL_0X45(ohvm *vm);
 void SCRR_0X46(ohvm *vm);
+void SET_0X47(ohvm *vm);
 
 #endif
