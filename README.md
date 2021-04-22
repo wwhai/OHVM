@@ -236,7 +236,7 @@ Byte Code header contains 4byte file type,and 3byte version,4byte address:
 
 ## Program Compiler
 
-- https://github.com/ssloth/OpenVM-AS
+- ohvmcc.c
 
 ### How to use
 
