@@ -1,45 +1,34 @@
-# OPEN VM Design Document
+# OHVM 虚拟机设计规范
+## 简介
+这是我为了学习虚拟机原理和计算机程序运行原理，写的一个很简单的虚拟机demo，可以运行简单的字节码，当然如果我有时间和精力写出来相对完整点的版本，说不定还能搞个小玩具。
+## 基础规范
 
-## VM Specific
+### 内存范围
+默认内存设定大小为 0-4KB，可以调整参数来扩大。
 
-### RAM
+### 寄存器分布
 
-**_4KB_** - **_4GB_**
+一共有 293 个个寄存器.
 
-### Register
+### 栈
+一共有8层栈空间，每一层有32个寄存器。
 
-**_293_** Registers.
-
-### Stack
-
-**_8(layer)_** , **_32(Register)_** deepth Stack.
-
-## VM Model
-
-### Basic Structure
-
-The open ohvm is a virtual CPU simulator,It contains RAM,CPU,External Interface,like picture at bellow:
+## 虚拟机模型
 
 ![](res/model.png)
 
-### Memory Distributed
+### 内存分布
 
-1. Program address
-   Program address default is **_0x0H_**
-2. MAIN address
-   MAIN address default is **_0x0H_**,You can use **_START_** label assign main address
+1. 程序地址：
+程序从 0x0000H 开始。
+2. 入口地址：
+程序入口地址默认是 0x0000H。
 
-```assembly
-START:
-    MAIN 0H
-END
-```
+##### 注意
 
-##### _Notice:_
+> **_0x0H_** 是一个绝对地址, 真实地址是：**_1025_**.
 
-> **_0x0H_** is a abslute address, it's real address is **_1025_**.
-
-### Register Distributed
+### 寄存器分布
 
 Those address can't be accessed by user program.
 
@@ -56,7 +45,7 @@ Those address can't be accessed by user program.
 | General Register     | R{0...31} | 4byte(per) | ROM: 25 - 152    |
 | Stack Register       | S{0...7}  | 4byte(per) | ROM: 153 - 378   |
 
-### Flags
+### 标志位寄存器
 
 | Name      | Symbol | Size |
 | --------- | ------ | ---- |
@@ -69,13 +58,8 @@ Those address can't be accessed by user program.
 | Reserved  | --     | 1bit |
 | Reserved  | --     | 1bit |
 
-### Instructions Specific
 
-| Instruction Code | UNFIXED LENGTH segment |
-| ---------------- | ---------------------- |
-| 1 Byte           | Other segment          |
-
-### Instructions Set
+## 指令集
 
 | Instruction Code | Symbol                | Example                               | Function                                             |
 | ---------------- | --------------------- | ------------------------------------- | ---------------------------------------------------- |
@@ -152,52 +136,48 @@ Those address can't be accessed by user program.
 | 0X0046           | SCRR                  | SCRR                                  | Screen scrool right x pixel                          |
 | 0X0047           | SET [Rn]              | SET R0                                | Set value to ram                                     |
 
-##### _Notice:_
 
-> All instruction return value is store in passtive side. Such `MOVSR {Rx}` means move stack value to register ,passtive side is register.But in `INCA` means ACC increase 1 and return value to ACC.
 
-## VM Program Specific
+## 汇编规范
 
-### Reserved Keywords
+### 关键字
 
-- **_START_**: used for start ohvm
-- **_MAIN_**: main like c
-- **_END_**: sub process end label
-- **_STOP_**: stop ohvm
+- **_MAIN_**: 入口标识符
+- **_STOP_**: 直接退出虚拟机
+- **_BEGIN_**: 子程序声明标识符
+- **_END_**: 子程序标签
 
-##### _Notice:_
+##### _注意:_
 
-> <div style="color:red">Can't use those words in user program!</div>
+> <div style="color:red">关键字不可用于其他地方!</div>
 
-### Program text format
-
+### 汇编格式
+1. 入口
+   用 `MAIN` 标记入口，一个程序必须有一个 `MAIN`。
+2. 子程序
+   用 `BEGIN {子程序名}: [statement] END` 来声明一个子程序，例如声明一个输出字符的子程序：
 ```assembly
-START:
-    MAIN 0H
-END
 
-MAIN:
-    ;;
-END
-
-SUB1:
+BEGIN OUTPUT_CHAR:
    ;;
 END
 
-SUB2:
-   ;;
-END
-
+```
+3. 退出
+   退出用 `STOP` 标签标记，程序只要到 `STOP`，立即结束所有运行。
+```assembly
 STOP
 ```
+4. 注释
+   使用双分号注释: `;;`
+```
+    ;;这是一行注释
+```
 
-## Program Example
+## 汇编案例
 
 ```assembly
 ;; Example program
-START:
-    MAIN 00H ;; program start at 0H
-END
 ;; main
 MAIN:
     IA 0              ;; ACC = 0
@@ -207,16 +187,14 @@ MAIN:
     STOP              ;;
 END
 ;; display sub process
-DISPLAY:
+BEGIN DISPLAY:
     DCXY 40, 50, ACC ;; Display value in ACC
 END
-
-STOP
 ```
 
-## Exception
+## 异常处理
 
-Can use `TRY ... CATCH` expression to catch exceptions.
+按理来说汇编不应该有异常处理这种设计的，但是我想了下异常处理的本质也是一个 `JMP`,于是我自作聪明的设计了这个语法：`TRY ... CATCH`.
 
 ```
 TRY
@@ -226,37 +204,62 @@ TRY
 CATCH ${Address}
 ```
 
-When exception catched, the `EX` flag be seted and `EXCPT` register be seted exception code.
+捕获异常时，将设置 `EX` 寄存器设置为1，并且跳转到 `CATCH` 指定的代码位置处。
 
-## VM Byte Code Specific
-
-Byte Code header contains 4byte file type,and 3byte version,4byte address:
+## 字节码规范
+如图：
 
 ![](res/bc-format.png)
 
-## Program Compiler
+## 编译器
+我现在技术不到家，写不出来高级语言编译器，本来打算设计一个简单的编译器，把 C 或者是 BASIC 这种基础语法编译成字节码，但是我水平太菜了，搞不定，于是这里只能手动来写字节码了。
 
-- ohvmcc.c
-
-### How to use
-
-```shell
-# oohvmcc file
-oohvmcc hello_world.oohvm
-ls
-# hello_world.oohvm hello_world.oohvmbc
+### 如何编译
+编译流程：
 ```
+┌───────────────────────┐
+│    BASIC Source code  │
+│                       │
+└──────────┬────────────┘
+           │
+           ▼
+┌───────────────────────┐
+│   OHVM ASM code       │
+│                       │
+└──────────┬────────────┘
+           │
+┌──────────▼────────────┐
+│                       │
+│   OHVM Byte code      │
+└───────────────────────┘
+```
+假设编译器已经实现好了，应该按照下面的方式来使用：
+```shell
+# 要编译这个文件：hello_world.oohvms
+oohvmcc hello_world.oohvms
+# 编译完成后，应该有下面这几个文件：
+# hello_world.oohvmasm hello_world.oohvmbc
+```
+> oohvms 为源代码文件；oohvmasm 为汇编代码；oohvmbc 为字节码文件
+## 任务规划
 
-## Todo list
+- [x] 基础指令集设计
+- [ ] 项目结构设计
+- [ ] 虚拟机内核设计
+- [ ] 汇编器设计
+- [ ] 高级程序语言设计
+- [ ] 程序编译器设计
 
-- [x] Instructions Set Design
-- [ ] Project Structure Design
-- [ ] VM Core design
-- [ ] ASM Compiler Design
-- [ ] Programing VM Core
-- [ ] Programing Compiler
-
-## Resources
+## 资源链接
 
 - Blog: https://openlab.ezlinker.cn
 - Mail: cnwwhai@gmail.com
+
+## 参考
+
+- 《计算机程序运行原理》
+
+- 《C语言核心技术》
+
+- 《Linux内核开发》
+- YACC，LEX 等基础官方文档（实现编译器相关）
