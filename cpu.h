@@ -7,6 +7,7 @@
 
 #ifndef cpu_h
 #define cpu_h
+//
 enum INS_TABLE
 {
     NOP = 0X00,

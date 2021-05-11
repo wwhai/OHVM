@@ -35,3 +35,5 @@ main
 ohvm
 ohvmcc
 .vscode/
+*.pix
+*.out

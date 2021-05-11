@@ -16,6 +16,7 @@
 #include "SDL2/SDL_ttf.h"
 #define GRAPHICS_WIDTH 640
 #define GRAPHICS_HEIGHT 480
+
 //
 SDL_Window *main_indow = NULL;
 SDL_Renderer *main_renderer = NULL;
